@@ -4,7 +4,7 @@
   "description": "Slideshow Component for React.js",
   "main": "PictureShow.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -r should --recursive"
   },
   "repository": {
     "type": "git",
@@ -22,8 +22,9 @@
   },
   "homepage": "https://github.com/skiano/react-picture-show",
   "devDependencies": {
-    "intern": "^2.2.2",
-    "jsdom": "^4.0.1",
-    "mocha": "^2.1.0"
+    "jsdom": "3.1.2",
+    "mocha": "^2.1.0",
+    "react": "^0.12.2",
+    "should": "^5.0.1"
   }
 }
