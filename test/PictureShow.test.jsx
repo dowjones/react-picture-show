@@ -8,8 +8,6 @@ var slideshowElm, testSlides;
 
 function setUp () {
 
-  // createDOM();
-
   testSlides = ['A','B','C','D'].map(function (letter) {
     return (<div className={letter}/>);
   });
@@ -102,6 +100,126 @@ describe('PictureShow Navigation', function () {
     panels[0].props.style.transform.should.equal(getShift(0, 2));
     panels[1].props.style.transform.should.equal(getShift(0, 0));
     panels[2].props.style.transform.should.equal(getShift(0, 1));
+
+  });
+
+  it('should position panels correctly on previous', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    var slideCount = slideshow.props.slides.length;
+
+    function getShift (idx, panelPosition) {
+      panelPosition = (panelPosition - 1) * slideCount;
+      return 'translate3d(' + ((100 / slideCount) * (-idx + panelPosition)) + '%,0,0)';
+    }
+
+    // slide 0
+
+    panels[0].props.style.transform.should.equal(getShift(0, 0));
+    panels[1].props.style.transform.should.equal(getShift(0, 1));
+    panels[2].props.style.transform.should.equal(getShift(0, 2));
+
+    slideshow.previous(); // slide 3 <---- around the seam
+
+    panels[0].props.style.transform.should.equal(getShift(3, 1));
+    panels[1].props.style.transform.should.equal(getShift(3, 2));
+    panels[2].props.style.transform.should.equal(getShift(3, 0));
+
+    slideshow.previous(); // slide 2
+
+    panels[0].props.style.transform.should.equal(getShift(2, 1));
+    panels[1].props.style.transform.should.equal(getShift(2, 2));
+    panels[2].props.style.transform.should.equal(getShift(2, 0));
+
+    slideshow.previous(); // slide 1
+
+    panels[0].props.style.transform.should.equal(getShift(1, 1));
+    panels[1].props.style.transform.should.equal(getShift(1, 2));
+    panels[2].props.style.transform.should.equal(getShift(1, 0));
+
+    slideshow.previous(); // slide 0
+
+    panels[0].props.style.transform.should.equal(getShift(0, 1));
+    panels[1].props.style.transform.should.equal(getShift(0, 2));
+    panels[2].props.style.transform.should.equal(getShift(0, 0));
+
+    slideshow.next(); // just double checking a turn
+
+    panels[0].props.style.transform.should.equal(getShift(1, 1));
+    panels[1].props.style.transform.should.equal(getShift(1, 2));
+    panels[2].props.style.transform.should.equal(getShift(1, 0));
+
+  });
+
+  it('should jump to slides correctly', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    var slideCount = slideshow.props.slides.length;
+
+    function getShift (idx, panelPosition) {
+      panelPosition = (panelPosition - 1) * slideCount;
+      return 'translate3d(' + ((100 / slideCount) * (-idx + panelPosition)) + '%,0,0)';
+    }
+
+    slideshow.goToSlide(3);
+
+    panels[0].props.style.transform.should.equal(getShift(3, 0));
+    panels[1].props.style.transform.should.equal(getShift(3, 1));
+    panels[2].props.style.transform.should.equal(getShift(3, 2));
+
+    slideshow.goToSlide(0);
+
+    panels[0].props.style.transform.should.equal(getShift(0, 0));
+    panels[1].props.style.transform.should.equal(getShift(0, 1));
+    panels[2].props.style.transform.should.equal(getShift(0, 2));
+
+  });
+
+});
+
+describe('PictureShow Navigation', function () {
+
+  it('should not load panels outside slide buffer', function () {
+
+    var elm = (<PictureShow 
+                startingSlide={0} 
+                slides={['A','B','C','D','E','F'].map(function (letter) {
+                  return (<div className={'slide-'+letter}/>);
+                })}/>);
+
+    var slideshow = TestUtils.renderIntoDocument(elm);
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'wsj-slideshow-slides')[0];
+    var slides = TestUtils.scryRenderedDOMComponentsWithClass(panel, 'wsj-slide-wrap');
+
+    // should load slides
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[0], 'slide-A');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[1], 'slide-B');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[5], 'slide-F');});
+
+    // // should not be loaded
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'slide-C');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+
+    slideshow.next(); // now 2 should load
+
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'slide-C');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+
+    slideshow.next(); // now 3 should load
+
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
+
+    slideshow.previous();
+    slideshow.previous();
+    slideshow.previous();
+
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
 
   });
 
