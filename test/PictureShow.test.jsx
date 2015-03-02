@@ -21,7 +21,7 @@ describe('PictureShow Structure', function () {
 
   });
 
-  it('should add correct classes', function () {
+  it('should apply correct classes', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm),
       wrap,
@@ -37,6 +37,19 @@ describe('PictureShow Structure', function () {
     panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
 
     panels.length.should.equal(3);
+
+  });
+
+  it('should apply inline styles correctly', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides')[0];
+    var slide = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slide-wrap')[0];
+
+    wrap.props.style.paddingBottom.should.equal('66.6667%');
+    panel.props.style.width.should.equal((slideshow.props.slides.length * 100) + '%');
+    slide.props.style.width.should.equal((100/slideshow.props.slides.length) + '%');
 
   });
 
