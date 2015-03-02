@@ -1,0 +1,82 @@
+
+/* Container */
+
+.wsj-slideshow {
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wsj-slideshow-wrap {
+  position: relative;
+  width: 100%;
+  height: 0; 
+}
+
+.wsj-slideshow-slides {
+  position: absolute;
+  display: block;
+  height: 100%;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95);
+     -moz-transition: all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95);
+          transition: all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95);
+  -webkit-transition-timing-function: cubic-bezier(0.365, 0.45, 0.23, 0.95);
+     -moz-transition-timing-function: cubic-bezier(0.365, 0.45, 0.23, 0.95);
+          transition-timing-function: cubic-bezier(0.365, 0.45, 0.23, 0.95);
+}
+
+.wsj-slideshow-slides:hover {
+  cursor: pointer;
+}
+
+.wsj-slide-wrap {
+  overflow: hidden;
+  height: 100%;
+  float: left;
+  background-color: #FAFAFA;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+/* Slide 
+ * Centering method from (ghost element)
+ * http://css-tricks.com/centering-in-the-unknown/
+ */
+
+.wsj-img-slide {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 0;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.wsj-img-slide:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: 0.25em; /* Adjusts for spacing */
+}
+
+.wsj-slideshow-img {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.tall.wsj-slideshow-img {
+  height: 100%;
+  width: auto;
+}
+
+.wide.wsj-slideshow-img {
+  width: 100%;
+  height: auto;
+}
