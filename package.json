@@ -4,7 +4,7 @@
   "description": "Slideshow Component for React.js",
   "main": "PictureShow.js",
   "scripts": {
-    "test": "mocha -r should --recursive --compilers jsx:util/compiler.js test/*.jsx"
+    "test": "mocha -r should --recursive --compilers jsx:util/compiler.js util/test-helper.js test/*.jsx"
   },
   "repository": {
     "type": "git",
