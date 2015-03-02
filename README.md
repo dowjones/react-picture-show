@@ -12,6 +12,8 @@ Basic Slideshow Component
 
 ### Configuration
 
+__config__
+
 ## License
 
 [MIT](/LICENSE)
