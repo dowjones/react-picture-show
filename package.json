@@ -1,14 +1,16 @@
 {
   "name": "react-picture-show",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Slideshow Component for React.js",
-  "main": "PictureShow.js",
+  "main": "dist/PictureShow.js",
   "scripts": {
-    "test": "mocha -r should --recursive --compilers jsx:util/compiler.js util/test-helper.js test/*.jsx"
+    "test": "mocha -r should --compilers jsx:test/util/compiler.js test/util/test-helper.js test/*.jsx",
+    "build": "jsx -x jsx ./src ./lib",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/skiano/react-picture-show.git"
+    "url": "https://github.com/areusjs/react-picture-show.git"
   },
   "keywords": [
     "react-component",
@@ -18,13 +20,12 @@
   "author": "gregoryskiano@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/skiano/react-picture-show/issues"
+    "url": "https://github.com/areusjs/react-picture-show/issues"
   },
-  "homepage": "https://github.com/skiano/react-picture-show",
+  "homepage": "https://github.com/areusjs/react-picture-show",
   "devDependencies": {
     "jsdom": "3.1.2",
     "mocha": "^2.1.0",
-    "node-jsx": "^0.12.4",
     "react": "^0.12.2",
     "react-tools": "^0.12.2",
     "should": "^5.0.1",

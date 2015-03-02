@@ -1,5 +1,5 @@
 
-var PictureShow = require('../PictureShow'),
+var PictureShow = require('../src/PictureShow.jsx'),
   sinon = require('sinon'),
   React = require('react/addons'),
   assert = require('should'),
