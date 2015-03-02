@@ -1,5 +1,6 @@
 
 var createDOM = require('../util/createDOM'),
+  PictureShow = require('../PictureShow'),
   React = require('react/addons'),
   TestUtils = React.addons.TestUtils;
 
@@ -9,14 +10,11 @@ describe('PictureShow', function () {
 
   it('should do something', function () {
 
-    var el = React.createElement('div');
+    var el = (<PictureShow slides={[]}/>);
     var mounted = TestUtils.renderIntoDocument(el);
-
-    TestUtils.Simulate.click(mounted);
 
     console.log(mounted);
 
   });
-
 
 });

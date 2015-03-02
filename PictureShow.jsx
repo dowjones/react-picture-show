@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 /* globals window, navigator */
 
-var _ = require('lodash'),
+var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
   Slideshow;
@@ -95,7 +95,7 @@ module.exports = Slideshow = React.createClass({
     };
   },
 
-  handleResize: _.throttle(function () {
+  handleResize: throttle(function () {
     var box = this.refs.wrap.getDOMNode().getBoundingClientRect();
     this.setState({
       ratio: box.width / box.height

@@ -4,7 +4,7 @@
   "description": "Slideshow Component for React.js",
   "main": "PictureShow.js",
   "scripts": {
-    "test": "mocha -r should --recursive"
+    "test": "mocha -r should --recursive --compilers jsx:util/compiler.js test/*.jsx"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,13 @@
   "devDependencies": {
     "jsdom": "3.1.2",
     "mocha": "^2.1.0",
+    "node-jsx": "^0.12.4",
     "react": "^0.12.2",
+    "react-tools": "^0.12.2",
     "should": "^5.0.1"
+  },
+  "dependencies": {
+    "lodash": "^3.3.1",
+    "react-swipeable": "^2.0.0"
   }
 }
