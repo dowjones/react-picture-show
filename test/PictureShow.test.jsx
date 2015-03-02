@@ -181,7 +181,7 @@ describe('PictureShow Navigation', function () {
 
 });
 
-describe('PictureShow Navigation', function () {
+describe('PictureShow Preloading', function () {
 
   it('should not load panels outside slide buffer', function () {
 
@@ -220,6 +220,85 @@ describe('PictureShow Navigation', function () {
     slideshow.previous();
 
     assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+
+  });
+
+});
+
+describe('PictureShow Interaction', function () {
+
+  beforeEach(setUp);
+
+  it('should paginate on mouse down', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'wsj-slideshow-slides')[1];
+    var node = slideshow.getDOMNode();
+    var originalFn = node.getBoundingClientRect;
+
+    node.getBoundingClientRect = function () {
+      return {
+        left: 100,
+        width: 200
+      };
+    };
+
+    TestUtils.Simulate.mouseDown(panel, {
+      clientX: 180 // previous
+    });
+
+    slideshow.state.slideIdx.should.equal(3);
+
+    TestUtils.Simulate.mouseDown(panel, {
+      clientX: 210 // next
+    });
+
+    TestUtils.Simulate.mouseDown(panel, {
+      clientX: 220 // next
+    });
+
+    slideshow.state.slideIdx.should.equal(1);
+
+    node.getBoundingClientRect = originalFn; // replace original function
+
+  });
+
+  it('should paginate on swipe', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var node = slideshow.getDOMNode();
+
+    // finger moving right
+
+    TestUtils.Simulate.touchStart(node, {
+      touches: [{clientX: 180, clientY: 100}]
+    });
+    TestUtils.Simulate.touchMove(node, {
+      touches: [{clientX: 200, clientY: 100}],
+      changedTouches: [{clientX: 200, clientY: 100}]
+    });
+    TestUtils.Simulate.touchEnd(node, {
+      touches: [{clientX: 240, clientY: 100}],
+      changedTouches: [{clientX: 240, clientY: 100}]
+    });
+
+    slideshow.state.slideIdx.should.equal(3);
+
+    // finger moving left
+
+    TestUtils.Simulate.touchStart(node, {
+      touches: [{clientX: 180, clientY: 100}]
+    });
+    TestUtils.Simulate.touchMove(node, {
+      touches: [{clientX: 170, clientY: 100}],
+      changedTouches: [{clientX: 170, clientY: 100}]
+    });
+    TestUtils.Simulate.touchEnd(node, {
+      touches: [{clientX: 140, clientY: 100}],
+      changedTouches: [{clientX: 140, clientY: 100}]
+    });
+
+    slideshow.state.slideIdx.should.equal(0);
 
   });
 
