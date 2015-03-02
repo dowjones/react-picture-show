@@ -27,7 +27,8 @@
     "node-jsx": "^0.12.4",
     "react": "^0.12.2",
     "react-tools": "^0.12.2",
-    "should": "^5.0.1"
+    "should": "^5.0.1",
+    "sinon": "^1.12.2"
   },
   "dependencies": {
     "lodash": "^3.3.1",

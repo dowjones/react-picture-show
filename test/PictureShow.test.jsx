@@ -1,5 +1,6 @@
 
 var PictureShow = require('../PictureShow'),
+  sinon = require('sinon'),
   React = require('react/addons'),
   assert = require('should'),
   TestUtils = React.addons.TestUtils;
@@ -48,6 +49,37 @@ describe('PictureShow Structure', function () {
     wrap.props.style.paddingBottom.should.equal('66.6667%');
     panel.props.style.width.should.equal((slideshow.props.slides.length * 100) + '%');
     slide.props.style.width.should.equal((100/slideshow.props.slides.length) + '%');
+
+  });
+
+  // it('should use ratio of element when in full screen', function () {
+
+  //   var elm = React.createElement(Slideshow, {
+  //     startingSlide: 0,
+  //     slides: ['A','B','C','D','E','F'],
+  //     fullscreen: true
+  //   });
+
+  //   var slideshow = TestUtils.renderIntoDocument(elm);
+
+  //   expect(slideshow.refs.wrap.props.style).toBeNull();
+  //   // console.log(slideshow.state); // TODO: figure out how to test the bounding rectangle here
+
+  // });
+
+  it('should add a listener to window resize', function () {
+
+    window.addEventListener = sinon.spy();
+
+    var elm = React.createElement(PictureShow, {
+      startingSlide: 0,
+      slides: testSlides,
+      fullscreen: true
+    });
+
+    var slideshow = TestUtils.renderIntoDocument(elm);
+
+    window.addEventListener.calledWith('resize',slideshow.handleResize).should.be.true;
 
   });
 
