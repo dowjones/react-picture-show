@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build:jsx": "browserify -e App.jsx -t reactify -s App > public/app.js",
+    "build:jsx": "browserify -e App.jsx -t reactify -s App > public/App.js",
     "build:css": "cp node_modules/react-picture-show/PictureShow.css public/",
     "build": "npm run build:jsx && npm run build:css"
   },
