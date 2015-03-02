@@ -1,6 +1,6 @@
 {
   "name": "react-picture-show",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Slideshow Component for React.js",
   "main": "dist/PictureShow.js",
   "scripts": {
