@@ -52,20 +52,19 @@ describe('PictureShow Structure', function () {
 
   });
 
-  // it('should use ratio of element when in full screen', function () {
+  it('should use ratio of element when in full screen', function () {
 
-  //   var elm = React.createElement(Slideshow, {
-  //     startingSlide: 0,
-  //     slides: ['A','B','C','D','E','F'],
-  //     fullscreen: true
-  //   });
+    var elm = React.createElement(PictureShow, {
+      startingSlide: 0,
+      slides: testSlides,
+      fullscreen: true
+    });
 
-  //   var slideshow = TestUtils.renderIntoDocument(elm);
+    var slideshow = TestUtils.renderIntoDocument(elm);
 
-  //   expect(slideshow.refs.wrap.props.style).toBeNull();
-  //   // console.log(slideshow.state); // TODO: figure out how to test the bounding rectangle here
+    slideshow.refs.wrap.props.style.should.be.null;
 
-  // });
+  });
 
   it('should add a listener to window resize', function () {
 
