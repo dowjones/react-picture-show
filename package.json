@@ -1,0 +1,29 @@
+{
+  "name": "react-picture-show",
+  "version": "0.0.0",
+  "description": "Slideshow Component for React.js",
+  "main": "PictureShow.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skiano/react-picture-show.git"
+  },
+  "keywords": [
+    "react-component",
+    "slideshow",
+    "carousel"
+  ],
+  "author": "gregoryskiano@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skiano/react-picture-show/issues"
+  },
+  "homepage": "https://github.com/skiano/react-picture-show",
+  "devDependencies": {
+    "intern": "^2.2.2",
+    "jsdom": "^4.0.1",
+    "mocha": "^2.1.0"
+  }
+}
