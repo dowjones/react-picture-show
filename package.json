@@ -1,0 +1,27 @@
+{
+  "name": "react-picture-show",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "browserify": "^9.0.3",
+    "react": "^0.12.2",
+    "react-picture-show": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build:jsx": "browserify -e App.jsx -t reactify -s App > public/app.js",
+    "build:css": "cp node_modules/react-picture-show/PictureShow.css public/",
+    "build": "npm run build:jsx && npm run build:css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/areusjs/react-picture-show.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/areusjs/react-picture-show/issues"
+  },
+  "homepage": "https://github.com/areusjs/react-picture-show"
+}
