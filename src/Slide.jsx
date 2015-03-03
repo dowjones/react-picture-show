@@ -27,11 +27,6 @@ module.exports = Slide = React.createClass({
       check = hasShape(width, height),
       shapeClass = check ? extractShape(width, height, this.props.slideRatio) : 'stretch';
 
-    var imgClass = [
-      'ps-slide',
-      shapeClass
-    ].join(' ');
-
     var imgStyle;
 
     if (shapeClass === 'tall') {
@@ -44,9 +39,14 @@ module.exports = Slide = React.createClass({
       };
     }
 
+    var img = React.Children.only(this.props.children);
+
     return (
-      <div className={imgClass} style={imgStyle}>
-        {this.props.children}
+      <div className='ps-slide'>
+        {React.addons.cloneWithProps(img, {
+          style: imgStyle,
+          className: ['ps-img',shapeClass].join(' ')
+        })}
       </div>
     );
   }
