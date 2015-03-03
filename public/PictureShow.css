@@ -1,20 +1,20 @@
 
 /* Container */
 
-.wsj-slideshow {
+.picture-show {
   overflow: hidden;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 }
 
-.wsj-slideshow-wrap {
+.ps-wrap {
   position: relative;
   width: 100%;
   height: 0; 
 }
 
-.wsj-slideshow-slides {
+.ps-slides {
   position: absolute;
   display: block;
   height: 100%;
@@ -28,11 +28,11 @@
           transition-timing-function: cubic-bezier(0.365, 0.45, 0.23, 0.95);
 }
 
-.wsj-slideshow-slides:hover {
+.ps-slides:hover {
   cursor: pointer;
 }
 
-.wsj-slide-wrap {
+.ps-slide-wrap {
   overflow: hidden;
   height: 100%;
   float: left;

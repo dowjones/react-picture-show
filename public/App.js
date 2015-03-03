@@ -290,7 +290,7 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     var fullScreenClass = this.props.fullscreen ? 'fullscreen' : undefined,
       mainClass = [
         this.props.className,
-        'wsj-slideshow',
+        'picture-show',
         fullScreenClass
       ].join(' ');
 
@@ -333,13 +333,13 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     var slides = this.props.slides.map(function (slide, idx) {
       if (this.shouldLoad(slide,idx)) {
         return (
-          React.createElement("div", {className: "wsj-slide-wrap", key: idx, style: slideStyle}, 
+          React.createElement("div", {className: "ps-slide-wrap", key: idx, style: slideStyle}, 
             React.createElement(Slide, {slideRatio: ratio, content: slide})
           )
         );
       } else {
         return (
-          React.createElement("div", {className: "wsj-slide-wrap pending-slide", key: idx, style: slideStyle})
+          React.createElement("div", {className: "ps-slide-wrap pending-slide", key: idx, style: slideStyle})
         );
       }
     }.bind(this));
@@ -350,11 +350,11 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
         onSwiped: this.handleSwipe, 
         onSwipeRight: this.handleSwiping, 
         onSwipeLeft: this.handleSwiping}, 
-        React.createElement("div", {className: "wsj-slideshow-wrap", style: wrapStyle, ref: "wrap"}, 
+        React.createElement("div", {className: "ps-wrap", style: wrapStyle, ref: "wrap"}, 
           ['A','B','C'].map(function (key) {
             var panelStyle = getPanelStyle(this.state.panels.indexOf(key), key);
             return (
-              React.createElement("div", {className: "wsj-slideshow-slides", key: key, style: panelStyle, onMouseDown: this.handleSlideClick}, 
+              React.createElement("div", {className: "ps-slides", key: key, style: panelStyle, onMouseDown: this.handleSlideClick}, 
                 slides
               )
             );
