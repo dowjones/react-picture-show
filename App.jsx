@@ -21,8 +21,15 @@ module.exports = App = React.createClass({
 
   next: function () {
     this.refs.slideshow.next();
+  },
+
+  previous: function () {
+    this.refs.slideshow.previous();
+  },
+
+  onTransition: function (previous, next) {
     this.setState({
-      slideIdx: this.state.slideIdx + 1
+      slideIdx: next
     });
   },
 
@@ -41,20 +48,50 @@ module.exports = App = React.createClass({
       };
     });
 
+    var ratio = null;
+
+    ratio = [3,2];
+
     return (
       <div style={{
         width: '50%',
         margin: '40px auto'
       }}>
-        <PictureShow slides={slides} ratio={[2,1]} ref='slideshow'/>
+        <PictureShow 
+          slides={slides} 
+          ratio={ratio} 
+          onTransition={this.onTransition}
+          ref='slideshow'/>
+
         <div style={{
           padding: 10,
-          display: 'inline-block',
           marginTop: 10,
-          background: 'tomato',
-          color: '#fff',
-          cursor: 'pointer'
-        }} onClick={this.next}>next</div>
+          color: 'tomato',
+          textAlign: 'center'
+        }}>
+
+          {this.state.slideIdx + 1} of {slides.length}
+
+          <div style={{
+            float: 'right',
+            padding: 10,
+            display: 'inline-block',
+            background: 'tomato',
+            color: '#fff',
+            cursor: 'pointer'
+          }} onClick={this.next}>next</div>
+
+          <div style={{
+            float: 'left',
+            padding: 10,
+            display: 'inline-block',
+            background: 'tomato',
+            color: '#fff',
+            cursor: 'pointer'
+          }} onClick={this.previous}>prev</div>
+
+
+        </div>
       </div>
     );
   }

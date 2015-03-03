@@ -23,8 +23,15 @@ module.exports = App = React.createClass({displayName: "App",
 
   next: function () {
     this.refs.slideshow.next();
+  },
+
+  previous: function () {
+    this.refs.slideshow.previous();
+  },
+
+  onTransition: function (previous, next) {
     this.setState({
-      slideIdx: this.state.slideIdx + 1
+      slideIdx: next
     });
   },
 
@@ -43,20 +50,50 @@ module.exports = App = React.createClass({displayName: "App",
       };
     });
 
+    var ratio = null;
+
+    ratio = [3,2];
+
     return (
       React.createElement("div", {style: {
         width: '50%',
         margin: '40px auto'
       }}, 
-        React.createElement(PictureShow, {slides: slides, ratio: [2,1], ref: "slideshow"}), 
+        React.createElement(PictureShow, {
+          slides: slides, 
+          ratio: ratio, 
+          onTransition: this.onTransition, 
+          ref: "slideshow"}), 
+
         React.createElement("div", {style: {
           padding: 10,
-          display: 'inline-block',
           marginTop: 10,
-          background: 'tomato',
-          color: '#fff',
-          cursor: 'pointer'
-        }, onClick: this.next}, "next")
+          color: 'tomato',
+          textAlign: 'center'
+        }}, 
+
+          this.state.slideIdx + 1, " of ", slides.length, 
+
+          React.createElement("div", {style: {
+            float: 'right',
+            padding: 10,
+            display: 'inline-block',
+            background: 'tomato',
+            color: '#fff',
+            cursor: 'pointer'
+          }, onClick: this.next}, "next"), 
+
+          React.createElement("div", {style: {
+            float: 'left',
+            padding: 10,
+            display: 'inline-block',
+            background: 'tomato',
+            color: '#fff',
+            cursor: 'pointer'
+          }, onClick: this.previous}, "prev")
+
+
+        )
       )
     );
   }
@@ -73,11 +110,11 @@ var throttle = require('lodash/function/throttle'),
   React = (typeof window !== "undefined" ? window.React : typeof global !== "undefined" ? global.React : null),
   Swipeable = require('react-swipeable'),
   Slide = require('./Slide'),
-  Slideshow;
+  PictureShow;
 
+// speed expressed in px/second
+// returns milliseconds
 function getTransitionTime (distance, speed) {
-  // speed expressed in px/second
-  // returns milliseconds
   return distance / speed * 1000;
 }
 
@@ -99,29 +136,44 @@ function getInternetExplorerVersion(minimum) {
   return rv;
 }
 
-module.exports = Slideshow = React.createClass({displayName: "Slideshow",
+module.exports = PictureShow = React.createClass({displayName: "PictureShow",
 
   propTypes: {
     slides: React.PropTypes.array.isRequired,
     ratio: React.PropTypes.array,
+    onTransition: React.PropTypes.func,
     startingSlide: React.PropTypes.number,
     animationSpeed: React.PropTypes.number,
     slideBuffer: React.PropTypes.number,
-    clickDivide: React.PropTypes.number,
-    fullscreen: React.PropTypes.bool
+    clickDivide: React.PropTypes.number
   },
 
   getDefaultProps: function (argument) {
     return {
-      ratio: [3,2],
+      ratio: null,
       startingSlide: 0,
       animationSpeed: 1500,
       slideBuffer: 1,
       clickDivide: 0.45,
-      fullscreen: false
+      onTransition: function () { return; }
     };
   },
 
+  getInitialState: function () {
+
+    // store an object on this instance
+    this.preloaded = []; 
+
+    return {
+      slideIdx: this.props.startingSlide,
+      panels: ['A','B','C'],
+      ratio: 3/2,
+      use3dFallback: false
+    };
+  },
+
+  // TODO: make sure the poly fill is in our set of polyfills
+  // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.addEventListener
   componentDidMount: function () {
 
     // decide if we use 3d transforms
@@ -132,56 +184,33 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
       });
     }
 
-    if (this.props.fullscreen) {
-      this.handleResize();
+    if (!this.props.ratio) {
+      this._handleResize();
 
-      // TODO: make sure the poly fill is in our set of polyfills
-      // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.addEventListener
       if (window.addEventListener) {
-        window.addEventListener('resize', this.handleResize, false);
+        window.addEventListener('resize', this._handleResize, false);
       }
     }
   },
 
   componentWillUnmount: function () {
-    if (this.props.fullscreen) {
-      // TODO: make sure the poly fill is in our set of polyfills
-      // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.addEventListener
-      if (window.addEventListener) {
-        window.removeEventListener('resize', this.handleResize, false);
-      }
+    if (!this.props.ratio && window.removeEventListener) {
+      window.removeEventListener('resize', this._handleResize, false);
     }
   },
 
-  getInitialState: function () {
-
-    this.preloaded = []; // store an bj on this instance
-
-    return {
-      slideIdx: this.props.startingSlide,
-      panels: ['A','B','C'],
-      use3dFallback: false
-    };
-  },
-
-  handleResize: throttle(function () {
-    var box = this.refs.wrap.getDOMNode().getBoundingClientRect();
-    this.setState({
-      ratio: box.width / box.height
-    });
-  }, 30),
-
   goToSlide: function (slideIdx, direction, event) {
+
+    var before = this.state.slideIdx;
 
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
 
-    direction = direction || (slideIdx > this.state.slideIdx ? 'right' : 'left');
+    direction = direction || (slideIdx > before ? 'right' : 'left');
 
     var elm = this.getDOMNode(),
       width = elm.offsetWidth,
-      // distance = this.getDistance(this.state.slideIdx, slideIdx, direction) * width,
       animationTime = getTransitionTime(width, this.props.animationSpeed);
 
     var panels = this.state.panels,
@@ -189,15 +218,17 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
 
     if (slideIdx === this.state.slideIdx) {
       return;
-    } else if (direction === 'right' && slideIdx < this.state.slideIdx) {
+    } else if (direction === 'right' && slideIdx < before) {
       trickPanel = panels.shift();
       panels.push(trickPanel);
-    } else if (direction === 'left' && slideIdx > this.state.slideIdx) {
+    } else if (direction === 'left' && slideIdx > before) {
       trickPanel = panels.pop();
       panels.unshift(trickPanel);
     } else {
       trickPanel = null;
     }
+
+    this.props.onTransition(before, slideIdx);
 
     this.setState({
       slideIdx: slideIdx,
@@ -206,6 +237,7 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
       trickPanel: trickPanel,
       animationTime: animationTime,
     });
+
   },
 
   next: function (event) {
@@ -216,8 +248,14 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     this.goToSlide(this.state.slideIdx > 0 ? this.state.slideIdx - 1 : this.props.slides.length - 1, 'left', event);
   },
 
-  handleSlideClick: function (event) {
+  _handleResize: throttle(function () {
+    var box = this.refs.wrap.getDOMNode().getBoundingClientRect();
+    this.setState({
+      ratio: box.width / box.height
+    });
+  }, 30),
 
+  _handleSlideClick: function (event) {
     if (this.state.swiping) {
       return;
     }
@@ -235,7 +273,7 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     }
   },
 
-  handleSwipe: function (ev, x, y, isFlick) {
+  _handleSwipe: function (ev, x, y, isFlick) {
     this.setState({
       swiping: false
     });
@@ -247,30 +285,27 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     }
   },
 
-  handleSwiping: function () {
+  _handleSwiping: function () {
+    // TODO: track finger
     this.setState({
       swiping: true
     });
   },
 
-  getDistance: function (startIdx, endIdx, direction) {
-    return direction === 'left' ? this.getLeftDistance(startIdx, endIdx) : this.getRightDistance(startIdx, endIdx);
-  },
-
-  getLeftDistance: function (startIdx, endIdx) {
+  _getLeftDistance: function (startIdx, endIdx) {
     var d = startIdx - endIdx;
     return d < 0 ? this.props.slides.length + d : d;
   },
 
-  getRightDistance: function (startIdx, endIdx) {
-    return this.getLeftDistance(endIdx, startIdx);
+  _getRightDistance: function (startIdx, endIdx) {
+    return this._getLeftDistance(endIdx, startIdx);
   },
 
-  shouldLoad: function (slide, idx) {
+  _shouldLoad: function (slide, idx) {
     if (this.preloaded.indexOf(slide) > -1) {
       return true;
-    } else if (this.getLeftDistance(this.state.slideIdx, idx) <= this.props.slideBuffer ||
-               this.getRightDistance(this.state.slideIdx, idx) <= this.props.slideBuffer) {
+    } else if (this._getLeftDistance(this.state.slideIdx, idx) <= this.props.slideBuffer ||
+               this._getRightDistance(this.state.slideIdx, idx) <= this.props.slideBuffer) {
       this.preloaded.push(slide);
       return true;
     } else {
@@ -278,60 +313,59 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     }
   },
 
-  render: function () {
-
-    var self = this;
+  _getPanelStyle: function (idx, key) {
 
     var slots = this.props.slides.length,
       panelWidth = slots * 100,
-      ratio = this.state.ratio || this.props.ratio[1] / this.props.ratio[0] * 100,
       panelPosition = this.state.slideIdx * -100;
 
-    var fullScreenClass = this.props.fullscreen ? 'fullscreen' : undefined,
-      mainClass = [
-        this.props.className,
-        'picture-show',
-        fullScreenClass
-      ].join(' ');
+    var display = key === this.state.trickPanel ? 'none' : null,
+      shift = (idx - 1) * panelWidth,
+      left = (panelPosition + shift) + '%', // for IE
+      transform = 'translate3d(' + ((panelPosition + shift)/this.props.slides.length) + '%,0,0)';
 
-    var wrapStyle = !this.props.fullscreen ? {
+    if (this.state.use3dFallback) {
+      return {
+        WebkitTransitionDuration: this.state.animationTime + 'ms',
+        transitionDuration: this.state.animationTime + 'ms',
+        width: panelWidth + '%',
+        left: left,
+        display: display
+      };
+    } else {
+      return {
+        WebkitTransitionDuration: this.state.animationTime + 'ms',
+        transitionDuration: this.state.animationTime + 'ms',
+        width: panelWidth + '%',
+        WebkitTransform: transform,
+        MozTransform: transform,
+        MsTransform: transform,
+        transform: transform,
+        display: display
+      };
+    }
+  },
+
+  render: function () {
+
+    var ratio = this.props.ratio ? this.props.ratio[1] / this.props.ratio[0] * 100 : this.state.ratio;
+
+    var mainClass = [
+      'picture-show',
+      (!this.props.ratio ? 'stretch' : undefined),
+      this.props.className
+    ].join(' ');
+
+    var wrapStyle = this.props.ratio ? {
       paddingBottom: ratio.toFixed(4) + "%"
     } : null;
 
-    function getPanelStyle (idx, key) {
-      var display = key === self.state.trickPanel ? 'none' : null,
-        shift = (idx - 1) * panelWidth,
-        left = (panelPosition + shift) + '%', // for IE
-        transform = 'translate3d(' + ((panelPosition + shift)/self.props.slides.length) + '%,0,0)';
-
-      if (self.state.use3dFallback) {
-        return {
-          WebkitTransitionDuration: self.state.animationTime + 'ms',
-          transitionDuration: self.state.animationTime + 'ms',
-          width: panelWidth + '%',
-          left: left,
-          display: display
-        };
-      } else {
-        return {
-          WebkitTransitionDuration: self.state.animationTime + 'ms',
-          transitionDuration: self.state.animationTime + 'ms',
-          width: panelWidth + '%',
-          WebkitTransform: transform,
-          MozTransform: transform,
-          MsTransform: transform,
-          transform: transform,
-          display: display
-        };
-      }
-    }
-
     var slideStyle = {
-      width: (100 / slots) + '%'
+      width: (100 / this.props.slides.length) + '%'
     };
 
     var slides = this.props.slides.map(function (slide, idx) {
-      if (this.shouldLoad(slide,idx)) {
+      if (this._shouldLoad(slide,idx)) {
         return (
           React.createElement("div", {className: "ps-slide-wrap", key: idx, style: slideStyle}, 
             React.createElement(Slide, {slideRatio: ratio, content: slide})
@@ -347,14 +381,14 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
     return (
       React.createElement(Swipeable, {
         className: mainClass, 
-        onSwiped: this.handleSwipe, 
-        onSwipeRight: this.handleSwiping, 
-        onSwipeLeft: this.handleSwiping}, 
+        onSwiped: this._handleSwipe, 
+        onSwipeRight: this._handleSwiping, 
+        onSwipeLeft: this._handleSwiping}, 
         React.createElement("div", {className: "ps-wrap", style: wrapStyle, ref: "wrap"}, 
           ['A','B','C'].map(function (key) {
-            var panelStyle = getPanelStyle(this.state.panels.indexOf(key), key);
+            var panelStyle = this._getPanelStyle(this.state.panels.indexOf(key), key);
             return (
-              React.createElement("div", {className: "ps-slides", key: key, style: panelStyle, onMouseDown: this.handleSlideClick}, 
+              React.createElement("div", {className: "ps-slides", key: key, style: panelStyle, onMouseDown: this._handleSlideClick}, 
                 slides
               )
             );

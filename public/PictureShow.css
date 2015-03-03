@@ -82,3 +82,23 @@
   width: 100%;
   height: auto;
 }
+
+/* stretchy mode */
+
+.stretch.picture-show {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.stretch > .ps-wrap {
+  background: none;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: auto;
+  width: auto;
+}
