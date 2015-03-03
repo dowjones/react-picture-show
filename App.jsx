@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react/addons'),
+  PictureShow = require('react-picture-show'),
   App;
 
 module.exports = App = React.createClass({
@@ -13,6 +14,12 @@ module.exports = App = React.createClass({
   },
 
   render: function () {
-    return (<div>hi there</div>);
+    return (
+      <div>
+        hi there
+        <PictureShow/>
+      </div>
+    );
   }
+
 });
