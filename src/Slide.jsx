@@ -15,16 +15,21 @@ function hasShape (w, h) {
 module.exports = Slide = React.createClass({
 
   propTypes: {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    src: React.PropTypes.string,
+    content: React.PropTypes.object,
     slideRatio: React.PropTypes.number
+  },
+
+  getDefaultProps: function () {
+    return {
+      content: {},
+      slideRatio: 1
+    };
   },
 
   render: function () {
 
-    var width = this.props.width,
-      height = this.props.height,
+    var width = this.props.content.width,
+      height = this.props.content.height,
       check = hasShape(width, height),
       shapeClass = check ? extractShape(width, height, this.props.slideRatio) : 'stretch';
 
@@ -42,7 +47,7 @@ module.exports = Slide = React.createClass({
 
     return (
       <div className='ps-slide'>
-        <img className={['ps-img',shapeClass].join(' ')} style={imgStyle} />
+        <img className={['ps-img',shapeClass].join(' ')} style={imgStyle} src={this.props.content.content}/>
       </div>
     );
   }
