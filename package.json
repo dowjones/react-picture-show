@@ -1,11 +1,11 @@
 {
   "name": "react-picture-show",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Slideshow Component for React.js",
   "main": "lib/PictureShow.js",
   "scripts": {
     "test": "mocha -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
-    "test-watch": "mocha -G -w -R min -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx", 
+    "test-watch": "mocha -G -w -R min -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
     "build": "jsx -x jsx ./src ./lib",
     "prepublish": "npm run build"
   },
