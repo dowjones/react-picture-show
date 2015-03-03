@@ -34,14 +34,14 @@ describe('PictureShow Structure', function () {
       wrap,
       panels;
 
-    slideshow.getDOMNode().className.should.match(/\bwsj-slideshow\b/);
+    slideshow.getDOMNode().className.should.match(/\bpicture-show\b/);
     slideshow.getDOMNode().className.should.match(/\badded-class\b/);
 
     assert.doesNotThrow(function () {
-      wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
+      wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
     });
 
-    panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
 
     panels.length.should.equal(3);
 
@@ -50,9 +50,9 @@ describe('PictureShow Structure', function () {
   it('should apply inline styles correctly', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
-    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
-    var panel = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides')[0];
-    var slide = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slide-wrap')[0];
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides')[0];
+    var slide = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slide-wrap')[0];
 
     wrap.props.style.paddingBottom.should.equal('66.6667%');
     panel.props.style.width.should.equal((slideshow.props.slides.length * 100) + '%');
@@ -101,8 +101,8 @@ describe('PictureShow Navigation', function () {
   it('should position panels correctly on next', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
-    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
-    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
     var slideCount = slideshow.props.slides.length;
 
     function getShift (idx, panelPosition) {
@@ -145,8 +145,8 @@ describe('PictureShow Navigation', function () {
   it('should position panels correctly on previous', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
-    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
-    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
     var slideCount = slideshow.props.slides.length;
 
     function getShift (idx, panelPosition) {
@@ -195,8 +195,8 @@ describe('PictureShow Navigation', function () {
   it('should jump to slides correctly', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
-    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'wsj-slideshow-wrap');
-    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'wsj-slideshow-slides');
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
     var slideCount = slideshow.props.slides.length;
 
     function getShift (idx, panelPosition) {
@@ -231,8 +231,8 @@ describe('PictureShow Preloading', function () {
                 })}/>);
 
     var slideshow = TestUtils.renderIntoDocument(elm);
-    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'wsj-slideshow-slides')[0];
-    var slides = TestUtils.scryRenderedDOMComponentsWithClass(panel, 'wsj-slide-wrap');
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'ps-slides')[0];
+    var slides = TestUtils.scryRenderedDOMComponentsWithClass(panel, 'ps-slide-wrap');
 
     // should load slides
     assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[0], 'slide-A');});
@@ -271,7 +271,7 @@ describe('PictureShow Interaction', function () {
   it('should paginate on mouse down', function () {
 
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
-    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'wsj-slideshow-slides')[1];
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'ps-slides')[1];
     var node = slideshow.getDOMNode();
     var originalFn = node.getBoundingClientRect;
 
