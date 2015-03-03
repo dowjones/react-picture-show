@@ -9,9 +9,11 @@
     "react-picture-show": "^1.0.2",
     "reactify": "^1.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "browserify-shim": "^3.8.3"
+  },
   "scripts": {
-    "build:jsx": "browserify -e App.jsx -t reactify -s App > public/App.js",
+    "build:jsx": "browserify -x react -x react/addons -e App.jsx -t reactify -g browserify-shim -s App > public/App.js",
     "build:css": "cp node_modules/react-picture-show/PictureShow.css public/",
     "build": "npm run build:jsx && npm run build:css"
   },
@@ -23,6 +25,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/areusjs/react-picture-show/issues"
+  },
+  "browserify-shim": {
+    "react/addons": "global:React",
+    "react": "global:React"
   },
   "homepage": "https://github.com/areusjs/react-picture-show"
 }

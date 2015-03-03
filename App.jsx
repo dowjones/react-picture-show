@@ -28,27 +28,33 @@ module.exports = App = React.createClass({
 
   render: function () {
 
-    var slides = 'ABCDEF'.split('').map(function (letter, idx) {
-
-      var style = {
-        background: idx%2 ? 'mediumseagreen' : 'slategray',
-        color: 'white',
-        textAlign: 'center',
-        height: '100%'
+    var slides = [
+      [300,300],
+      [700,500],
+      [500,700],
+      [126,100],
+    ].map(function (shape, idx) {
+      return {
+        width: shape[0],
+        height: shape[1],
+        src: 'http://placehold.it/'+shape[0]+'x'+shape[1]
       };
-
-      return (
-        <div style={style} width={300} height={300}>
-          {letter}
-        </div>
-      );
     });
 
     return (
-      <div style={{width: '50%'}}>
-        hi there
+      <div style={{
+        width: '50%',
+        margin: '40px auto'
+      }}>
         <PictureShow slides={slides} ratio={[2,1]} ref='slideshow'/>
-        <div onClick={this.next}>next</div>
+        <div style={{
+          padding: 10,
+          display: 'inline-block',
+          marginTop: 10,
+          background: 'tomato',
+          color: '#fff',
+          cursor: 'pointer'
+        }} onClick={this.next}>next</div>
       </div>
     );
   }
