@@ -1,13 +1,21 @@
 
-var PictureShow = require('../src/PictureShow.jsx'),
+var proxyquire = require('proxyquire').noCallThru(),
   sinon = require('sinon'),
   React = require('react/addons'),
   assert = require('should'),
   TestUtils = React.addons.TestUtils;
 
-var slideshowElm, testSlides;
+var slideshowElm, testSlides, PictureShow;
 
 function setUp () {
+
+  PictureShow = proxyquire('../src/PictureShow.jsx', {
+    './Slide': React.createClass({
+      render: function () {
+        return <div>{this.props.content}</div>;
+      }
+    })
+  });
 
   testSlides = ['A','B','C','D'].map(function (letter) {
     return (<div className={letter}/>);
