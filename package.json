@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
     "test-watch": "mocha -G -w -R min -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
-    "build": "jsx -x jsx ./src ./lib",
+    "build": "jsx --no-cache-dir -x jsx ./src ./lib",
     "prepublish": "npm run build"
   },
   "repository": {
