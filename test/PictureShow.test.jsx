@@ -21,7 +21,7 @@ function setUp () {
     return (<div className={letter}/>);
   });
 
-  slideshowElm = (<PictureShow startingSlide={0} slides={testSlides} className='added-class'/>);
+  slideshowElm = (<PictureShow startingSlide={0} slides={testSlides} className='added-class' ratio={[3,2]}/>);
 }
 
 describe('PictureShow Structure', function () {
@@ -60,12 +60,11 @@ describe('PictureShow Structure', function () {
 
   });
 
-  it('should use ratio of element when in full screen', function () {
+  it('should use ratio of element when no ratio is supplied', function () {
 
     var elm = React.createElement(PictureShow, {
       startingSlide: 0,
-      slides: testSlides,
-      fullscreen: true
+      slides: testSlides
     });
 
     var slideshow = TestUtils.renderIntoDocument(elm);
@@ -74,19 +73,18 @@ describe('PictureShow Structure', function () {
 
   });
 
-  it('should add a listener to window resize', function () {
+  it('should add a listener to window resize if no ratio is supplied', function () {
 
     window.addEventListener = sinon.spy();
 
     var elm = React.createElement(PictureShow, {
       startingSlide: 0,
-      slides: testSlides,
-      fullscreen: true
+      slides: testSlides
     });
 
     var slideshow = TestUtils.renderIntoDocument(elm);
 
-    window.addEventListener.calledWith('resize',slideshow.handleResize).should.be.true;
+    window.addEventListener.calledWith('resize',slideshow._handleResize).should.be.true;
 
   });
 
