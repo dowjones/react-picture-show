@@ -14,10 +14,26 @@ module.exports = App = React.createClass({
   },
 
   render: function () {
+
+    var slides = 'ABCDEF'.split('').map(function (letter, idx) {
+
+      var style = {
+        background: idx%2 ? 'mediumseagreen' : 'slategray',
+        color: 'white',
+        textAlign: 'center'
+      };
+
+      return (
+        <div style={style} width={300} height={300}>
+          {letter}
+        </div>
+      );
+    });
+
     return (
-      <div>
+      <div style={{width: 500}}>
         hi there
-        <PictureShow/>
+        <PictureShow slides={slides} ratio={[1,1]}/>
       </div>
     );
   }

@@ -6,7 +6,7 @@
   "dependencies": {
     "browserify": "^9.0.3",
     "react": "^0.12.2",
-    "react-picture-show": "^1.0.1",
+    "react-picture-show": "areusjs/react-picture-show.git#master",
     "reactify": "^1.0.0"
   },
   "devDependencies": {},

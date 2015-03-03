@@ -15,10 +15,26 @@ module.exports = App = React.createClass({displayName: "App",
   },
 
   render: function () {
+
+    var slides = 'ABCDEF'.split('').map(function (letter, idx) {
+
+      var style = {
+        background: idx%2 ? 'mediumseagreen' : 'slategray',
+        color: 'white',
+        textAlign: 'center'
+      };
+
+      return (
+        React.createElement("div", {style: style, width: 300, height: 300}, 
+          letter
+        )
+      );
+    });
+
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {style: {width: 500}}, 
         "hi there", 
-        React.createElement(PictureShow, null)
+        React.createElement(PictureShow, {slides: slides, ratio: [1,1]})
       )
     );
   }
@@ -350,6 +366,7 @@ module.exports = Slideshow = React.createClass({displayName: "Slideshow",
 
     var slides = this.props.slides.map(function (slide, idx) {
       if (this.shouldLoad(slide,idx)) {
+        console.log(slide.props);
         return (
           React.createElement("div", {className: "wsj-slide-wrap", key: idx, style: slideStyle}, 
             React.addons.cloneWithProps(slide, {slideRatio: ratio})
