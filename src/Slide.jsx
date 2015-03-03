@@ -38,7 +38,7 @@ module.exports = Slide = React.createClass({
       imgStyle = {
         maxHeight: this.props.height
       };
-    } else {
+    } else if (shapeClass === 'wide') {
       imgStyle = {
         maxWidth: this.props.width
       };
