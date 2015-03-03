@@ -5,7 +5,7 @@ var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
   Slide = require('./Slide'),
-  Slideshow;
+  PictureShow;
 
 // speed expressed in px/second
 // returns milliseconds
@@ -31,7 +31,7 @@ function getInternetExplorerVersion(minimum) {
   return rv;
 }
 
-module.exports = Slideshow = React.createClass({
+module.exports = PictureShow = React.createClass({
 
   propTypes: {
     slides: React.PropTypes.array.isRequired,
