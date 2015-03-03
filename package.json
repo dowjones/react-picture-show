@@ -1,12 +1,12 @@
 {
-  "name": "react-picture-show",
+  "name": "react-picture-show-example",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "browserify": "^9.0.3",
     "react": "^0.12.2",
-    "react-picture-show": "areusjs/react-picture-show.git#master",
+    "react-picture-show": "^1.0.2",
     "reactify": "^1.0.0"
   },
   "devDependencies": {},

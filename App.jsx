@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
 var React = require('react/addons'),
-  PictureShow = require('react-picture-show'),
+  PictureShow = require('react-picture-show'), // temp untill dev is done
   App;
 
 module.exports = App = React.createClass({
@@ -13,6 +13,19 @@ module.exports = App = React.createClass({
     }
   },
 
+  getInitialState: function () {
+    return {
+      slideIdx: 0
+    };
+  },
+
+  next: function () {
+    this.refs.slideshow.next();
+    this.setState({
+      slideIdx: this.state.slideIdx + 1
+    });
+  },
+
   render: function () {
 
     var slides = 'ABCDEF'.split('').map(function (letter, idx) {
@@ -20,7 +33,8 @@ module.exports = App = React.createClass({
       var style = {
         background: idx%2 ? 'mediumseagreen' : 'slategray',
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        height: '100%'
       };
 
       return (
@@ -31,9 +45,10 @@ module.exports = App = React.createClass({
     });
 
     return (
-      <div style={{width: 500}}>
+      <div style={{width: '50%'}}>
         hi there
-        <PictureShow slides={slides} ratio={[1,1]}/>
+        <PictureShow slides={slides} ratio={[2,1]} ref='slideshow'/>
+        <div onClick={this.next}>next</div>
       </div>
     );
   }

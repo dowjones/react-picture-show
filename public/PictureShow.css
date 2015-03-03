@@ -49,34 +49,38 @@
  * http://css-tricks.com/centering-in-the-unknown/
  */
 
-.wsj-img-slide {
+.ps-slide-wrap,
+.wsj-slide-wrap {
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 0;
-  letter-spacing: 0;
   white-space: nowrap;
 }
 
-.wsj-img-slide:before {
+.ps-slide-wrap:before,
+.wsj-slide-wrap:before {
   content: '';
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  margin-right: 0.25em; /* Adjusts for spacing */
 }
 
-.wsj-slideshow-img {
+.ps-slide  {
   display: inline-block;
   vertical-align: middle;
 }
 
-.tall.wsj-slideshow-img {
+.stretch.ps-slide {
+  width: 100%;
+  height: 100%;
+}
+
+.tall.ps-slide  {
   height: 100%;
   width: auto;
 }
 
-.wide.wsj-slideshow-img {
+.wide.ps-slide {
   width: 100%;
   height: auto;
 }
