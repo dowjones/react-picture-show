@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build:jsx": "browserify -x react -x react/addons -e App.jsx -t reactify -g browserify-shim -s App > public/App.js",
-    "build:css": "cp node_modules/react-picture-show/PictureShow.css public/",
+    "build:css": "cp node_modules/react-picture-show/lib/PictureShow.css public/",
     "build": "npm run build:jsx && npm run build:css"
   },
   "repository": {
