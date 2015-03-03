@@ -2,12 +2,44 @@
 
 Basic Slideshow Component
 
-## Usage
+## Basic Options
+
+```javascript
+  
+  <PictureShow
+    slides={[
+      {width: 100, height: 100, src: ''},
+      {width: 100, height: 100, src: ''}
+    ]}
+    ratio={[3,2]}
+    onTransition={function(){}}
+    startingSlide=1
+    />
+
+```
 
 ### Basic
 
 ```javascript
-  console.log('hello world');
+  var PictureShow = require('react-picture-show');
+
+  var slides = [{
+    width: 900,
+    height: 600,
+    src: 'http://placehold.it/900x600'
+  }, {
+    width: 600,
+    height: 900,
+    src: 'http://placehold.it/600x900'
+  }, {
+    width: 600,
+    height: 600,
+    src: 'http://placehold.it/600x600'
+  }];
+
+  // in jsx
+
+  <PictureShow ratio={[3,2]} slides={slides}/>
 ```
 
 ### Configuration
