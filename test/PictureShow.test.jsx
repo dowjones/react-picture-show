@@ -340,3 +340,33 @@ describe('PictureShow Interaction', function () {
   });
 
 });
+
+describe('PictureShow Events', function () {
+
+  beforeEach(setUp);
+
+  it('should run `onTransition`', function () {
+
+    var cb = sinon.spy();
+    
+    var elm = React.addons.cloneWithProps(slideshowElm, {
+      onTransition: cb
+    });
+
+    var slideshow = TestUtils.renderIntoDocument(elm);
+
+    slideshow.next();
+
+    cb.lastCall.args.should.eql([0,1]);
+
+    slideshow.next();
+
+    cb.lastCall.args.should.eql([1,2]);
+
+    slideshow.previous();
+
+    cb.lastCall.args.should.eql([2,1]);
+    
+  });
+
+});

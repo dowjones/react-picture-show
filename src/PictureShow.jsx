@@ -36,6 +36,7 @@ module.exports = PictureShow = React.createClass({
   propTypes: {
     slides: React.PropTypes.array.isRequired,
     ratio: React.PropTypes.array,
+    onTransition: React.PropTypes.func,
     startingSlide: React.PropTypes.number,
     animationSpeed: React.PropTypes.number,
     slideBuffer: React.PropTypes.number,
@@ -49,6 +50,7 @@ module.exports = PictureShow = React.createClass({
       animationSpeed: 1500,
       slideBuffer: 1,
       clickDivide: 0.45,
+      onTransition: function () { return; }
     };
   },
 
@@ -94,11 +96,13 @@ module.exports = PictureShow = React.createClass({
 
   goToSlide: function (slideIdx, direction, event) {
 
+    var before = this.state.slideIdx;
+
     if (event && event.stopPropagation) {
       event.stopPropagation();
     }
 
-    direction = direction || (slideIdx > this.state.slideIdx ? 'right' : 'left');
+    direction = direction || (slideIdx > before ? 'right' : 'left');
 
     var elm = this.getDOMNode(),
       width = elm.offsetWidth,
@@ -109,15 +113,17 @@ module.exports = PictureShow = React.createClass({
 
     if (slideIdx === this.state.slideIdx) {
       return;
-    } else if (direction === 'right' && slideIdx < this.state.slideIdx) {
+    } else if (direction === 'right' && slideIdx < before) {
       trickPanel = panels.shift();
       panels.push(trickPanel);
-    } else if (direction === 'left' && slideIdx > this.state.slideIdx) {
+    } else if (direction === 'left' && slideIdx > before) {
       trickPanel = panels.pop();
       panels.unshift(trickPanel);
     } else {
       trickPanel = null;
     }
+
+    this.props.onTransition(before, slideIdx);
 
     this.setState({
       slideIdx: slideIdx,
@@ -126,6 +132,7 @@ module.exports = PictureShow = React.createClass({
       trickPanel: trickPanel,
       animationTime: animationTime,
     });
+
   },
 
   next: function (event) {
