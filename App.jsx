@@ -37,7 +37,7 @@ module.exports = App = React.createClass({
 
     var slides = [
       [300,300],
-      [700,500],
+      [900,600],
       [500,700],
       [126,100],
     ].map(function (shape, idx) {
