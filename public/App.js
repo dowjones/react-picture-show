@@ -66,7 +66,6 @@ module.exports = App = React.createClass({displayName: "App",
           ref: "slideshow"}), 
 
         React.createElement("div", {style: {
-          padding: 10,
           marginTop: 10,
           color: 'tomato',
           textAlign: 'center'

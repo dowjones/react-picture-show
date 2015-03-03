@@ -64,7 +64,6 @@ module.exports = App = React.createClass({
           ref='slideshow'/>
 
         <div style={{
-          padding: 10,
           marginTop: 10,
           color: 'tomato',
           textAlign: 'center'
