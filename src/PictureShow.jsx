@@ -4,6 +4,7 @@
 var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
+  Slide = require('./Slide'),
   Slideshow;
 
 function getTransitionTime (distance, speed) {
@@ -265,7 +266,9 @@ module.exports = Slideshow = React.createClass({
       if (this.shouldLoad(slide,idx)) {
         return (
           <div className='wsj-slide-wrap' key={idx} style={slideStyle}>
-            {React.addons.cloneWithProps(slide, {slideRatio: ratio})}
+            <Slide slideRatio={ratio} width={slide.width} height={slide.height}>
+              {slide}
+            </Slide>
           </div>
         );
       } else {

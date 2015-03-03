@@ -15,8 +15,8 @@ function hasShape (w, h) {
 module.exports = Slide = React.createClass({
 
   propTypes: {
-    width: React.propTypes.number,
-    height: React.propTypes.number,
+    width: React.PropTypes.number,
+    height: React.PropTypes.number,
     slideRatio: React.PropTypes.number
   },
 
