@@ -68,17 +68,17 @@
   vertical-align: middle;
 }
 
-.stretch.ps-slide-img {
+.stretch.ps-img {
   width: 100%;
   height: 100%;
 }
 
-.tall.ps-slide-img {
+.tall.ps-img {
   height: 100%;
   width: auto;
 }
 
-.wide.ps-slide-img {
+.wide.ps-img {
   width: 100%;
   height: auto;
 }
