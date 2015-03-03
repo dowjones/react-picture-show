@@ -27,10 +27,12 @@
   "devDependencies": {
     "jsdom": "3.1.2",
     "mocha": "^2.1.0",
-    "react": "^0.12.2",
     "react-tools": "^0.12.2",
     "should": "^5.0.1",
     "sinon": "^1.12.2"
+  },
+  "peerDependencies": {
+    "react": "^0.12.2"
   },
   "dependencies": {
     "lodash": "^3.3.1",
