@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
     "test-watch": "mocha -G -w -R min -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
-    "build": "jsx --no-cache-dir -x jsx ./src ./lib",
+    "build:css": "node-sass src/PictureShow.scss lib/PictureShow.css",
+    "build:js": "jsx --no-cache-dir -x jsx ./src ./lib",
+    "build": "npm run build:js && npm run build:css",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -29,7 +31,8 @@
     "mocha": "^2.1.0",
     "react-tools": "^0.12.2",
     "should": "^5.0.1",
-    "sinon": "^1.12.2"
+    "sinon": "^1.12.2",
+    "node-sass": "^0.5.0"
   },
   "peerDependencies": {
     "react": "^0.12.2"

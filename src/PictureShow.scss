@@ -1,5 +1,5 @@
 
-/* Container */
+// Container
 
 .picture-show {
   overflow: hidden;
@@ -44,7 +44,9 @@
             user-select: none;
 }
 
-/* Slide 
+// Slide
+
+/*
  * Centering method from (ghost element)
  * http://css-tricks.com/centering-in-the-unknown/
  */
@@ -83,7 +85,7 @@
   height: auto;
 }
 
-/* stretchy mode */
+// stretchy mode (fullscreen)
 
 .stretch.picture-show {
   position: relative;
