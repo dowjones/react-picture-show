@@ -37,17 +37,17 @@ module.exports = Slide = React.createClass({
 
     if (shapeClass === 'tall') {
       imgStyle = {
-        maxHeight: this.props.height
+        maxHeight: height
       };
     } else if (shapeClass === 'wide') {
       imgStyle = {
-        maxWidth: this.props.width
+        maxWidth: width
       };
     }
 
     return (
       <div className='ps-slide'>
-        <img className={['ps-img',shapeClass].join(' ')} style={imgStyle} src={this.props.content.content}/>
+        <img className={['ps-img',shapeClass].join(' ')} style={imgStyle} src={this.props.content.src}/>
       </div>
     );
   }
