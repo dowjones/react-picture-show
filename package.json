@@ -2,7 +2,7 @@
   "name": "react-picture-show",
   "version": "1.0.1",
   "description": "Slideshow Component for React.js",
-  "main": "dist/PictureShow.js",
+  "main": "lib/PictureShow.js",
   "scripts": {
     "test": "mocha -r should --compilers jsx:test/util/compiler.js test/util/test-helper.js test/*.jsx",
     "build": "jsx -x jsx ./src ./lib",
