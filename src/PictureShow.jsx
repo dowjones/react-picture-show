@@ -266,7 +266,7 @@ module.exports = Slideshow = React.createClass({
       if (this.shouldLoad(slide,idx)) {
         return (
           <div className='wsj-slide-wrap' key={idx} style={slideStyle}>
-            <Slide slideRatio={ratio} width={slide.width} height={slide.height}>
+            <Slide slideRatio={ratio} width={slide.props.width} height={slide.props.height}>
               {slide}
             </Slide>
           </div>
