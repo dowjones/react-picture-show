@@ -32,7 +32,7 @@ The package includes lib/PictureShow.css and src/PictureShow.scss.
 
 ### Component Properties Overview
 
-Properties | Type | Default Value | Description | Supported 
+Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
 **ratio** | ```array [w,h]``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
 **animationSpeed** | ```number``` | 1500 | Roughly how many px/s the slide should move during transitions | yes
