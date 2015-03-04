@@ -34,7 +34,7 @@ The package includes lib/PictureShow.css and src/PictureShow.scss.
 
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
-**ratio** | array | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
+**ratio** | array [w,h] | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
 **animationSpeed** | number | 1500 | Roughly how many px/s the slide should move during transitions | yes
 **startingSlide** | number | 0 | The index of the slide to view first | yes
 **onBeforeTransition** | function | noop | ``function (currentIdx, nextIdx) {}`` | yes
