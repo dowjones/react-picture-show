@@ -19,7 +19,7 @@ module.exports = Slide = React.createClass({
     width: React.PropTypes.number,
     height: React.PropTypes.number,
     slideRatio: React.PropTypes.number,
-    slidePending: React.PropTypes.number
+    slidePending: React.PropTypes.bool
   },
 
   getDefaultProps: function () {
@@ -30,8 +30,8 @@ module.exports = Slide = React.createClass({
 
   render: function () {
 
-    var width = this.width,
-      height = this.height,
+    var width = this.props.width,
+      height = this.props.height,
       check = hasShape(width, height),
       shapeClass = check ? extractShape(width, height, this.props.slideRatio) : 'stretch';
 

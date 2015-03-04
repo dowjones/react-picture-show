@@ -275,9 +275,8 @@ module.exports = PictureShow = React.createClass({
         slideContent = null;
       } else {
         slideContent = React.addons.cloneWithProps(slide, {
-          width: ratio[0],
-          height: ratio[1],
-          pending: isPending
+          slideRatio: ratio,
+          slidePending: isPending
         });
       }
 
