@@ -1,6 +1,7 @@
 require('node-jsx').install({extension: '.jsx'});
 
-var express = require('express'),
+var React = require('react'), 
+  express = require('express'),
   compression = require('compression'),
   disableHttpCache = require('connect-cache-control'),
   morgan = require('morgan'),
@@ -15,11 +16,19 @@ app.use(disableHttpCache);
 app.use(morgan(IS_PROD ? 'combined' : 'dev'));
 app.use(compression());
 
-app.use('/favicon.ico', require('./resources/favicon'));
+app.use('/favicon.ico', function (req, res, next) {
+  res.end('');
+});
 
 // app resources
 app.use('/assets', serveStatic(__dirname + '/example'));
-app.use('/', require('./resources/pages'));
+
+var App = React.createFactory(require('./components/App/App.jsx'));
+app.use('/', function (req, res, next) {
+  var props = {};
+  res.send('<!DOCTYPE html>' + React.renderToString(App(props)));
+});
+
 app.use(errors.middleware.errorHandler);
 
 if (!module.parent) {
