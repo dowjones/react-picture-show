@@ -58,9 +58,8 @@ Slides are the direct child components of a ``<PictureShow/>``. They are cloned 
 
 ```jsx
 {
-  width: Number, // the width of the mounted slideshow
-  height: Number, // the height of the mounted slideshow
-  pending: Boolean // whether the slide can be lazyloaded
+  slideRatio: Number, // the ratio of the outer slide (w/h)
+  slidePending: Boolean // whether the slide can be lazyloaded
 }
 ```
 By cloning the children with these props, you are free to create 'slide' components that react to them however you want. If the child already has one of these props it will be replaced (even for ```<img/>``` components)
