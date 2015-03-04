@@ -7,8 +7,8 @@ var React = require('react'),
 module.exports = SimpleSlideshow = React.createClass({
   render: function () {
     return (
-      <div className="HelloWorld">
-        <PictureShow ratio={[16,9]}>
+      <div>
+        <PictureShow className='simple-slideshow' ratio={[20,8]}>
           <p className='simple-slide' style={{background: 'tomato', color: 'yellow'}}>Slide One</p>
           <p className='simple-slide' style={{background: 'slategrey', color: 'smoke'}}>Slide Two</p>
           <p className='simple-slide' style={{background: 'pink', color: 'darkblue'}}>Slide Three</p>

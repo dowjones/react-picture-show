@@ -8,8 +8,8 @@ var React = require('react'),
 module.exports = ImageSlideshow = React.createClass({
   render: function () {
     return (
-      <div className="HelloWorld">
-        <PictureShow ratio={[3,2]}>
+      <div>
+        <PictureShow className='image-slideshow' ratio={[3,2]}>
           <Slide src='http://placehold.it/300x300' width={300} height={300}/>
           <Slide src='http://placehold.it/600x400' width={600} height={400}/>
           <Slide src='http://placehold.it/400x600' width={400} height={600}/>

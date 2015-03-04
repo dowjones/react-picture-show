@@ -1,9 +1,9 @@
 
-@import 'reset';
-@import 'PictureShow';
-@import 'SimpleSlideshow/SimpleSlideshow';
-@import 'ImageSlideshow/ImageSlideshow';
-@import 'Slide/Slide';
+@import './reset';
+@import './PictureShow';
+@import './SimpleSlideshow/SimpleSlideshow';
+@import './ImageSlideshow/ImageSlideshow';
+@import './Slide/Slide';
 
 .main-well {
   width: 600px;
