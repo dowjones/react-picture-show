@@ -33,14 +33,14 @@ A Bare bones slideshow component that handles transitions between slides and exp
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
 **[ratio](#ratio)** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
-**[animationSpeed](#animationSpeed)** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
-**[startingSlide](#startingSlide)** | ```Number``` | 0 | Initial slide view | yes
-**[onBeforeTransition](#onBeforeTransition)** | ```Function``` | noop | Function called before transition starts | yes
-**[onAfterTransition](#onAfterTransition)** | ```Function``` | noop | Function called after transition ends | no
-**[slideBuffer](#slideBuffer)** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
-**[clickDivide](#clickDivide)** | ```Number``` | 0.45 | The division between previous and next when clicking the slideshow | yes 
+**[animationSpeed](#animationspeed)** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
+**[startingSlide](#startingslide)** | ```Number``` | 0 | Initial slide view | yes
+**[onBeforeTransition](#onbeforetransition)** | ```Function``` | noop | Function called before transition starts | yes
+**[onAfterTransition](#onaftertransition)** | ```Function``` | noop | Function called after transition ends | no
+**[slideBuffer](#slidebuffer)** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
+**[clickDivide](#clickdivide)** | ```Number``` | 0.45 | The division between previous and next when clicking the slideshow | yes 
 **[infinite](#infinite)** | ```Boolean``` | true | Is the Slideshow continuous | no
-**[suppressPending](#suppressPending)** | ```Boolean``` | true | Should slides outside the slideBuffer be suppressed  | no
+**[suppressPending](#suppresspending)** | ```Boolean``` | true | Should slides outside the slideBuffer be suppressed  | no
 
 ### Public methods on mounted component
 
