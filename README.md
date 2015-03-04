@@ -9,7 +9,7 @@ A Bare bones slideshow component that handles transitions between slides and exp
 #### node
 
 ``` jsx
-  npm install react-picture-show
+npm install react-picture-show
 ```
 
 ## Usage
@@ -18,13 +18,13 @@ A Bare bones slideshow component that handles transitions between slides and exp
 
 ```jsx
   
-  <PictureShow>
-    <img src='http://...'/>
-    <img src='http://...'/>
-    <div>another thing</div>
-    <img src='http://...'/>
-    <img src='http://...'/>
-  </PictureShow>
+<PictureShow>
+  <img src='http://...'/>
+  <img src='http://...'/>
+  <div>another thing</div>
+  <img src='http://...'/>
+  <img src='http://...'/>
+</PictureShow>
 
 ```
 
@@ -57,11 +57,11 @@ enable | Acticate slideshow | no
 Slides are the direct child components of a ``<PictureShow/>``. They are cloned with the following additional properties:
 
 ```jsx
-  {
-    width: Number, // the width of the mounted slideshow
-    height: Number, // the height of the mounted slideshow
-    pending: Boolean // whether the slide can be lazyloaded
-  }
+{
+  width: Number, // the width of the mounted slideshow
+  height: Number, // the height of the mounted slideshow
+  pending: Boolean // whether the slide can be lazyloaded
+}
 ```
 By cloning the children with these props, you are free to create 'slide' components that react to them however you want. If the child already has one of these props it will be replaced (even for ```<img/>``` components)
 
