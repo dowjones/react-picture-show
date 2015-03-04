@@ -406,10 +406,11 @@ describe('PictureShow Children', function () {
       className: 'A'
     });
 
-    console.log(slideChildren[0].props);
-    console.log(slideChildren[1].props);
-    console.log(slideChildren[2].props);
-    console.log(slideChildren[3].props);
+    slideChildren[2].props.should.eql({
+      slideRatio: [1,2],
+      slidePending: true,
+      className: 'C'
+    });
     
   });
 
