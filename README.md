@@ -41,8 +41,8 @@ Properties | Type | Default | Description | Supported
 **onAfterTransition** | ```Function``` | noop | Called after transition ends | no
 **slideBuffer** | ```Number``` | 1 | The number of slides should be marked as inview to the left and right | yes
 **clickDivide** | ```Number``` | 0.45 | Fraction where the line between previous and next should fall when clicking the slideshow | yes 
-**infinite** | ```boolean``` | true | Slideshow is continuous | no
-**nullPending** | ```boolean``` | true | Pending slides are not rendered | no
+**infinite** | ```Boolean``` | true | Slideshow is continuous | no
+**nullPending** | ```Boolean``` | true | Pending slides are not rendered | no
 
 ### Public methods on mounted component
 
