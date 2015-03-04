@@ -1,0 +1,12 @@
+.HelloWorld {
+  margin: 2em auto;
+  padding: 2em;
+  font-size: 120%;
+  border: 1px solid #ccc;
+  color: #777;
+  background-color: #fafafa;
+
+  > p {
+    margin-bottom: 0;
+  }
+}
