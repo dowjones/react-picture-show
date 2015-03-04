@@ -6,6 +6,24 @@
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
+
+  &.stretch {
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    & > .ps-wrap {
+      background: none;
+      overflow: hidden;
+      position: absolute;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      height: auto;
+      width: auto;
+    }
+  }
 }
 
 .ps-wrap {
@@ -44,63 +62,43 @@
             user-select: none;
 }
 
-// Slide
+// // Slide
 
-/*
- * Centering method from (ghost element)
- * http://css-tricks.com/centering-in-the-unknown/
- */
+// /*
+//  * Centering method from (ghost element)
+//  * http://css-tricks.com/centering-in-the-unknown/
+//  */
 
-.ps-slide {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  white-space: nowrap;
-}
+// .ps-slide {
+//   width: 100%;
+//   height: 100%;
+//   text-align: center;
+//   white-space: nowrap;
+// }
 
-.ps-slide:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
+// .ps-slide:before {
+//   content: '';
+//   display: inline-block;
+//   height: 100%;
+//   vertical-align: middle;
+// }
 
-.ps-slide > img  {
-  display: inline-block;
-  vertical-align: middle;
-}
+// .ps-slide > img  {
+//   display: inline-block;
+//   vertical-align: middle;
+// }
 
-.stretch.ps-img {
-  width: 100%;
-  height: 100%;
-}
+// .stretch.ps-img {
+//   width: 100%;
+//   height: 100%;
+// }
 
-.tall.ps-img {
-  height: 100%;
-  width: auto;
-}
+// .tall.ps-img {
+//   height: 100%;
+//   width: auto;
+// }
 
-.wide.ps-img {
-  width: 100%;
-  height: auto;
-}
-
-// stretchy mode (fullscreen)
-
-.stretch.picture-show {
-  position: relative;
-  width: 100%;
-  height: auto;
-}
-
-.stretch > .ps-wrap {
-  background: none;
-  overflow: hidden;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
-  height: auto;
-  width: auto;
-}
+// .wide.ps-img {
+//   width: 100%;
+//   height: auto;
+// }
