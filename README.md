@@ -32,7 +32,7 @@ A Bare bones slideshow component that handles transitions between slides and exp
 
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
-**ratio** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
+**[ratio](#ratio)** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
 **animationSpeed** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
 **startingSlide** | ```Number``` | 0 | Initial slide view | yes
 **onBeforeTransition** | ```Function``` | noop | Function called before transition starts | yes
