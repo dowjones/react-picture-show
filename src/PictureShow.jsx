@@ -4,7 +4,7 @@
 var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
-  Slide = require('./Slide'),
+  noop = function () {},
   PictureShow;
 
 // speed expressed in px/second
@@ -22,11 +22,11 @@ function support3d () {
 function getInternetExplorerVersion(minimum) {
   var rv = -1; // Return value assumes failure.
   if (navigator.appName === 'Microsoft Internet Explorer') {
-      var ua = navigator.userAgent;
-      var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-      if (re.exec(ua) !== null) {
-        rv = parseFloat(RegExp.$1);
-      }
+    var ua = navigator.userAgent,
+      re = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
+    if (re.exec(ua) !== null) {
+      rv = parseFloat(RegExp.$1);
+    }
   }
   return rv;
 }
@@ -34,28 +34,32 @@ function getInternetExplorerVersion(minimum) {
 module.exports = PictureShow = React.createClass({
 
   propTypes: {
-    slides: React.PropTypes.array.isRequired,
     ratio: React.PropTypes.array,
-    onTransition: React.PropTypes.func,
-    startingSlide: React.PropTypes.number,
     animationSpeed: React.PropTypes.number,
+    startingSlide: React.PropTypes.number,
+    onBeforeTransition: React.PropTypes.func,
+    onAfterTransition: React.PropTypes.func,
     slideBuffer: React.PropTypes.number,
-    clickDivide: React.PropTypes.number
+    clickDivide: React.PropTypes.number,
+    infinite: React.PropTypes.bool,
+    suppressPending: React.PropTypes.bool
   },
 
   getDefaultProps: function (argument) {
     return {
       ratio: null,
-      startingSlide: 0,
       animationSpeed: 1500,
+      startingSlide: 0,
+      onBeforeTransition: noop,
+      onAfterTransition: noop,
       slideBuffer: 1,
       clickDivide: 0.45,
-      onTransition: function () { return; }
+      infinite: true,
+      suppressPending: true
     };
   },
 
   getInitialState: function () {
-
     // store an object on this instance
     this.preloaded = []; 
 
@@ -123,7 +127,7 @@ module.exports = PictureShow = React.createClass({
       trickPanel = null;
     }
 
-    this.props.onTransition(before, slideIdx);
+    this.props.onBeforeTransition(before, slideIdx);
 
     this.setState({
       slideIdx: slideIdx,
@@ -136,17 +140,17 @@ module.exports = PictureShow = React.createClass({
   },
 
   next: function (event) {
-    this.goToSlide(this.state.slideIdx < this.props.slides.length - 1 ? this.state.slideIdx + 1 : 0, 'right', event);
+    this.goToSlide(this.state.slideIdx < React.Children.count(this.props.children) - 1 ? this.state.slideIdx + 1 : 0, 'right', event);
   },
 
   previous: function (event) {
-    this.goToSlide(this.state.slideIdx > 0 ? this.state.slideIdx - 1 : this.props.slides.length - 1, 'left', event);
+    this.goToSlide(this.state.slideIdx > 0 ? this.state.slideIdx - 1 : React.Children.count(this.props.children) - 1, 'left', event);
   },
 
   _handleResize: throttle(function () {
     var box = this.refs.wrap.getDOMNode().getBoundingClientRect();
     this.setState({
-      ratio: box.width / box.height
+      ratio: [box.width, box.height]
     });
   }, 30),
 
@@ -189,19 +193,19 @@ module.exports = PictureShow = React.createClass({
 
   _getLeftDistance: function (startIdx, endIdx) {
     var d = startIdx - endIdx;
-    return d < 0 ? this.props.slides.length + d : d;
+    return d < 0 ? React.Children.count(this.props.children) + d : d;
   },
 
   _getRightDistance: function (startIdx, endIdx) {
     return this._getLeftDistance(endIdx, startIdx);
   },
 
-  _shouldLoad: function (slide, idx) {
-    if (this.preloaded.indexOf(slide) > -1) {
+  _shouldLoad: function (idx) {
+    if (this.preloaded.indexOf(idx) > -1) {
       return true;
     } else if (this._getLeftDistance(this.state.slideIdx, idx) <= this.props.slideBuffer ||
                this._getRightDistance(this.state.slideIdx, idx) <= this.props.slideBuffer) {
-      this.preloaded.push(slide);
+      this.preloaded.push(idx);
       return true;
     } else {
       return false;
@@ -210,14 +214,14 @@ module.exports = PictureShow = React.createClass({
 
   _getPanelStyle: function (idx, key) {
 
-    var slots = this.props.slides.length,
+    var slots = React.Children.count(this.props.children),
       panelWidth = slots * 100,
       panelPosition = this.state.slideIdx * -100;
 
     var display = key === this.state.trickPanel ? 'none' : null,
       shift = (idx - 1) * panelWidth,
       left = (panelPosition + shift) + '%', // for IE
-      transform = 'translate3d(' + ((panelPosition + shift)/this.props.slides.length) + '%,0,0)';
+      transform = 'translate3d(' + ((panelPosition + shift)/slots) + '%,0,0)';
 
     if (this.state.use3dFallback) {
       return {
@@ -244,6 +248,7 @@ module.exports = PictureShow = React.createClass({
   render: function () {
 
     var ratio = this.props.ratio ? this.props.ratio[1] / this.props.ratio[0] * 100 : this.state.ratio;
+    var slots = React.Children.count(this.props.children);
 
     var mainClass = [
       'picture-show',
@@ -256,21 +261,32 @@ module.exports = PictureShow = React.createClass({
     } : null;
 
     var slideStyle = {
-      width: (100 / this.props.slides.length) + '%'
+      width: (100 / slots) + '%'
     };
 
-    var slides = this.props.slides.map(function (slide, idx) {
-      if (this._shouldLoad(slide,idx)) {
-        return (
-          <div className='ps-slide-wrap' key={idx} style={slideStyle}>
-            <Slide slideRatio={ratio} content={slide}/>
-          </div>
-        );
+    var slides = [];
+
+    React.Children.forEach(this.props.children, function (slide, idx) {
+      
+      var isPending = !this._shouldLoad(idx),
+        slideContent;
+
+      if (this.props.suppressPending && isPending) {
+        slideContent = null;
       } else {
-        return (
-          <div className='ps-slide-wrap pending-slide' key={idx} style={slideStyle} />
-        );
+        slideContent = React.addons.cloneWithProps(slide, {
+          width: ratio[0],
+          height: ratio[1],
+          pending: isPending
+        });
       }
+
+      slides.push(
+        <div className='ps-slide-wrap' key={idx} style={slideStyle}>
+          {slideContent}
+        </div>
+      );
+
     }.bind(this));
 
     return (

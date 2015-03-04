@@ -1,27 +1,23 @@
 
-var proxyquire = require('proxyquire').noCallThru(),
+var PictureShow = require('../src/PictureShow.jsx'), 
   sinon = require('sinon'),
   React = require('react/addons'),
   assert = require('should'),
   TestUtils = React.addons.TestUtils;
 
-var slideshowElm, testSlides, PictureShow;
+var slideshowElm, PictureShow;
 
 function setUp () {
 
-  PictureShow = proxyquire('../src/PictureShow.jsx', {
-    './Slide': React.createClass({
-      render: function () {
-        return <div>{this.props.content}</div>;
-      }
-    })
-  });
+  slideshowElm = (
+    <PictureShow startingSlide={0} className='added-class' ratio={[3,2]}>
+      <div className='A'/>
+      <div className='B'/>
+      <div className='C'/>
+      <div className='D'/>
+    </PictureShow>
+  );
 
-  testSlides = ['A','B','C','D'].map(function (letter) {
-    return (<div className={letter}/>);
-  });
-
-  slideshowElm = (<PictureShow startingSlide={0} slides={testSlides} className='added-class' ratio={[3,2]}/>);
 }
 
 describe('PictureShow Structure', function () {
@@ -52,20 +48,25 @@ describe('PictureShow Structure', function () {
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
     var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
     var panel = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides')[0];
-    var slide = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slide-wrap')[0];
+    var slide = TestUtils.scryRenderedDOMComponentsWithClass(panel, 'ps-slide-wrap')[0];
+    var slideCount = React.Children.count(slideshow.props.children);
+
 
     wrap.props.style.paddingBottom.should.equal('66.6667%');
-    panel.props.style.width.should.equal((slideshow.props.slides.length * 100) + '%');
-    slide.props.style.width.should.equal((100/slideshow.props.slides.length) + '%');
+    panel.props.style.width.should.equal((slideCount * 100) + '%');
+    slide.props.style.width.should.equal((100/slideCount) + '%');
 
   });
 
   it('should use ratio of element when no ratio is supplied', function () {
 
-    var elm = React.createElement(PictureShow, {
-      startingSlide: 0,
-      slides: testSlides
-    });
+    var elm = (
+      <PictureShow>
+        <div className='A'/>
+        <div className='B'/>
+        <div className='C'/>
+      </PictureShow>
+    );
 
     var slideshow = TestUtils.renderIntoDocument(elm);
 
@@ -77,10 +78,13 @@ describe('PictureShow Structure', function () {
 
     window.addEventListener = sinon.spy();
 
-    var elm = React.createElement(PictureShow, {
-      startingSlide: 0,
-      slides: testSlides
-    });
+    var elm = (
+      <PictureShow>
+        <div className='A'/>
+        <div className='B'/>
+        <div className='C'/>
+      </PictureShow>
+    );
 
     var slideshow = TestUtils.renderIntoDocument(elm);
 
@@ -101,7 +105,7 @@ describe('PictureShow Navigation', function () {
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
     var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
     var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
-    var slideCount = slideshow.props.slides.length;
+    var slideCount = React.Children.count(slideshow.props.children);
 
     function getShift (idx, panelPosition) {
       panelPosition = (panelPosition - 1) * slideCount;
@@ -145,7 +149,7 @@ describe('PictureShow Navigation', function () {
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
     var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
     var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
-    var slideCount = slideshow.props.slides.length;
+    var slideCount = React.Children.count(slideshow.props.children);
 
     function getShift (idx, panelPosition) {
       panelPosition = (panelPosition - 1) * slideCount;
@@ -195,7 +199,7 @@ describe('PictureShow Navigation', function () {
     var slideshow = TestUtils.renderIntoDocument(slideshowElm);
     var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
     var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
-    var slideCount = slideshow.props.slides.length;
+    var slideCount = React.Children.count(slideshow.props.children);
 
     function getShift (idx, panelPosition) {
       panelPosition = (panelPosition - 1) * slideCount;
@@ -227,36 +231,46 @@ describe('PictureShow Preloading', function () {
                 slides={['A','B','C','D','E','F'].map(function (letter) {
                   return (<div className={'slide-'+letter}/>);
                 })}/>);
+    var elm = (
+      <PictureShow>
+        <div className='A'/>
+        <div className='B'/>
+        <div className='C'/>
+        <div className='D'/>
+        <div className='E'/>
+        <div className='F'/>
+      </PictureShow>
+    );
 
     var slideshow = TestUtils.renderIntoDocument(elm);
     var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'ps-slides')[0];
     var slides = TestUtils.scryRenderedDOMComponentsWithClass(panel, 'ps-slide-wrap');
 
     // should load slides
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[0], 'slide-A');});
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[1], 'slide-B');});
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[5], 'slide-F');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[0], 'A');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[1], 'B');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[5], 'F');});
 
-    // // should not be loaded
-    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'slide-C');});
-    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
-    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+    // should not be loaded
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'C');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'D');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'E');});
 
     slideshow.next(); // now 2 should load
 
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'slide-C');});
-    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
-    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[2], 'C');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'D');});
+    assert.throws(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'E');});
 
     slideshow.next(); // now 3 should load
 
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'slide-D');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[3], 'D');});
 
     slideshow.previous();
     slideshow.previous();
     slideshow.previous();
 
-    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'slide-E');});
+    assert.doesNotThrow(function(){TestUtils.findRenderedDOMComponentWithClass(slides[4], 'E');});
 
   });
 
@@ -350,7 +364,7 @@ describe('PictureShow Events', function () {
     var cb = sinon.spy();
     
     var elm = React.addons.cloneWithProps(slideshowElm, {
-      onTransition: cb
+      onBeforeTransition: cb
     });
 
     var slideshow = TestUtils.renderIntoDocument(elm);
