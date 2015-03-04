@@ -34,13 +34,13 @@ The package includes lib/PictureShow.css and src/PictureShow.scss.
 
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
-**ratio** | ```array [w,h]``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
+**ratio** | ```array``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
 **animationSpeed** | ```number``` | 1500 | Roughly how many px/s the slide should move during transitions | yes
 **startingSlide** | ```number``` | 0 | The index of the slide to view first | yes
-**onBeforeTransition** | ```function(current, next)``` | noop | Called before transition starts | yes
-**onAfterTransition** | ```function(prev, current)``` | noop | Called after transition ends | no
+**onBeforeTransition** | ```function``` | noop | Called before transition starts | yes
+**onAfterTransition** | ```function``` | noop | Called after transition ends | no
 **slideBuffer** | ```number``` | 1 | The number of slides should be marked as inview to the left and right | yes
-**clickDivide** | ```number 0–1``` | 0.45 | Where the line between previous and next should fall when clicking the slideshow | yes 
+**clickDivide** | ```number``` | 0.45 | Fraction where the line between previous and next should fall when clicking the slideshow | yes 
 **infinite** | bool | true | Slideshow is continuous | no
 **nullPending** | bool | true | Pending slides are not rendered | no
 
