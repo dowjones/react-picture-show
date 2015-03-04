@@ -15,7 +15,7 @@ app.use(disableHttpCache);
 app.use(morgan(IS_PROD ? 'combined' : 'dev'));
 app.use(compression());
 
-// app.use('/favicon.ico', require('./lib/resources/favicon'));
+app.use('/favicon.ico', require('./resources/favicon'));
 
 // app resources
 app.use('/assets', serveStatic(__dirname + '/example'));

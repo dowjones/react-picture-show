@@ -10,7 +10,7 @@ exports.toJs = function () {
   return createStream(createBundler(false))
     .pipe(buffer())
     .pipe(uglify())
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./example/dist'));
 };
 
 exports.toJsWatch = function () {
@@ -18,7 +18,7 @@ exports.toJsWatch = function () {
 
   function createBundlerStream() {
     return createStream(bundler)
-      .pipe(gulp.dest('./dist'));
+      .pipe(gulp.dest('./example/dist'));
   }
 
   bundler = watchify(bundler);
