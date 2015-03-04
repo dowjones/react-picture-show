@@ -11,10 +11,10 @@ function setUp () {
 
   slideshowElm = (
     <PictureShow startingSlide={0} className='added-class' ratio={[3,2]}>
-      <div className='A'/>
-      <div className='B'/>
-      <div className='C'/>
-      <div className='D'/>
+      <img className='A'/>
+      <img className='B'/>
+      <img className='C'/>
+      <img className='D'/>
     </PictureShow>
   );
 
@@ -226,11 +226,6 @@ describe('PictureShow Preloading', function () {
 
   it('should not load panels outside slide buffer', function () {
 
-    var elm = (<PictureShow 
-                startingSlide={0} 
-                slides={['A','B','C','D','E','F'].map(function (letter) {
-                  return (<div className={'slide-'+letter}/>);
-                })}/>);
     var elm = (
       <PictureShow>
         <div className='A'/>
@@ -380,6 +375,41 @@ describe('PictureShow Events', function () {
     slideshow.previous();
 
     cb.lastCall.args.should.eql([2,1]);
+    
+  });
+
+});
+
+describe('PictureShow Children', function () {
+
+  beforeEach(setUp);
+
+  it('clone children with correct props', function () {
+
+    var elm = (
+      <PictureShow suppressPending={false} ratio={[1,2]}>
+        <img className='A'/>
+        <img className='B'/>
+        <img className='C'/>
+        <img className='D'/>
+        <img className='E'/>
+        <img className='F'/>
+      </PictureShow>
+    );
+
+    var slideshow = TestUtils.renderIntoDocument(elm);
+    var slideChildren = TestUtils.scryRenderedDOMComponentsWithTag(slideshow, 'img');
+
+    slideChildren[0].props.should.eql({
+      slideRatio: [1,2],
+      slidePending: false,
+      className: 'A'
+    });
+
+    console.log(slideChildren[0].props);
+    console.log(slideChildren[1].props);
+    console.log(slideChildren[2].props);
+    console.log(slideChildren[3].props);
     
   });
 

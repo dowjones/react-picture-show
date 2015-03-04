@@ -5,7 +5,7 @@ var React = require('react/addons'),
   Slide;
 
 function extractShape (w, h, slideRatio) {
-  return w/h < slideRatio ? 'tall' : 'wide';
+  return w/h < slideRatio[0]/slideRatio[1] ? 'tall' : 'wide';
 }
 
 function hasShape (w, h) {

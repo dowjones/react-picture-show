@@ -247,7 +247,7 @@ module.exports = PictureShow = React.createClass({
 
   render: function () {
 
-    var ratio = this.props.ratio ? this.props.ratio[1] / this.props.ratio[0] * 100 : this.state.ratio;
+    var ratio = this.props.ratio || this.state.ratio;
     var slots = React.Children.count(this.props.children);
 
     var mainClass = [
@@ -257,7 +257,7 @@ module.exports = PictureShow = React.createClass({
     ].join(' ');
 
     var wrapStyle = this.props.ratio ? {
-      paddingBottom: ratio.toFixed(4) + "%"
+      paddingBottom: (ratio[1] / ratio[0] * 100 ).toFixed(4) + "%"
     } : null;
 
     var slideStyle = {
