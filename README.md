@@ -34,15 +34,15 @@ The package includes lib/PictureShow.css and src/PictureShow.scss.
 
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
-**ratio** | ```Array``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
-**animationSpeed** | ```Number``` | 1500 | Roughly how many px/s the slide should move during transitions | yes
-**startingSlide** | ```Number``` | 0 | The index of the slide to view first | yes
-**onBeforeTransition** | ```Function``` | noop | Called before transition starts | yes
-**onAfterTransition** | ```Function``` | noop | Called after transition ends | no
-**slideBuffer** | ```Number``` | 1 | The number of slides should be marked as inview to the left and right | yes
-**clickDivide** | ```Number``` | 0.45 | Fraction where the line between previous and next should fall when clicking the slideshow | yes 
-**infinite** | ```Boolean``` | true | Slideshow is continuous | no
-**pendingNull** | ```Boolean``` | true | Pending slides are not rendered | no
+**ratio** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
+**animationSpeed** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
+**startingSlide** | ```Number``` | 0 | Initial slide view | yes
+**onBeforeTransition** | ```Function``` | noop | Function called before transition starts | yes
+**onAfterTransition** | ```Function``` | noop | Function called after transition ends | no
+**slideBuffer** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
+**clickDivide** | ```Number``` | 0.45 | The division between previous and next when clicking the slideshow | yes 
+**infinite** | ```Boolean``` | true | Is the Slideshow continuous | no
+**suppressPending** | ```Boolean``` | true | Should slides outside the slideBuffer be suppressed  | no
 
 ### Public methods on mounted component
 
@@ -67,7 +67,7 @@ Slides are the direct child components of a ``<PictureShow/>``. They are cloned 
 ```
 By cloning the children with these props, you are free to create 'slide' components that react to them however you want. If the child already has one of these props it will be replaced (even for ```<img/>``` components)
 
-_Note: If ```pendingNull``` property is true on ```<PictureShow/>```, then the slide will not render, so you will not need to handle the ```pending``` prop at the slide level. ```pendingNull``` exists for edge cases where the user wants to define how 'not loading' works_
+_Note: If ```suppressPending``` property is true on ```<PictureShow/>```, then the slide will not render, so you will not need to handle the ```pending``` prop at the slide level. ```suppressPending``` exists for edge cases where the user wants to define how 'not loading' works_
 
 ## License
 
