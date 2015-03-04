@@ -151,7 +151,7 @@ module.exports = PictureShow = React.createClass({
   _handleResize: throttle(function () {
     var box = this.refs.wrap.getDOMNode().getBoundingClientRect();
     this.setState({
-      ratio: box.width / box.height
+      ratio: [box.width, box.height]
     });
   }, 30),
 
@@ -215,14 +215,14 @@ module.exports = PictureShow = React.createClass({
 
   _getPanelStyle: function (idx, key) {
 
-    var slots = this.props.slides.length,
+    var slots = React.Children.count(this.props.children),
       panelWidth = slots * 100,
       panelPosition = this.state.slideIdx * -100;
 
     var display = key === this.state.trickPanel ? 'none' : null,
       shift = (idx - 1) * panelWidth,
       left = (panelPosition + shift) + '%', // for IE
-      transform = 'translate3d(' + ((panelPosition + shift)/this.props.slides.length) + '%,0,0)';
+      transform = 'translate3d(' + ((panelPosition + shift)/slots) + '%,0,0)';
 
     if (this.state.use3dFallback) {
       return {
@@ -249,6 +249,7 @@ module.exports = PictureShow = React.createClass({
   render: function () {
 
     var ratio = this.props.ratio ? this.props.ratio[1] / this.props.ratio[0] * 100 : this.state.ratio;
+    var slots = React.Children.count(this.props.children);
 
     var mainClass = [
       'picture-show',
@@ -261,26 +262,31 @@ module.exports = PictureShow = React.createClass({
     } : null;
 
     var slideStyle = {
-      width: (100 / this.props.slides.length) + '%'
+      width: (100 / slots) + '%'
     };
 
-    // var slides = React.Children.map(this.props.children, function (slide, idx) {
-    //   var pending = this._shouldLoad(slide,idx);
-    // });
+    var slides = [];
 
-    var slides = this.props.slides.map(function (slide, idx) {
+    React.Children.forEach(this.props.children, function (slide, idx) {
       
-      if (this._shouldLoad(idx)) {
-        return (
-          <div className='ps-slide-wrap' key={idx} style={slideStyle}>
-            <Slide slideRatio={ratio} content={slide}/>
-          </div>
-        );
+      var isPending = this._shouldLoad(slide,idx),
+        slideContent;
+
+      if (this.props.suppressPending && isPending) {
+        slideContent = null;
       } else {
-        return (
-          <div className='ps-slide-wrap pending-slide' key={idx} style={slideStyle} />
-        );
+        slideContent = React.addons.cloneWithProps(slide, {
+          width: ratio[0],
+          height: ratio[1],
+          pending: isPending
+        });
       }
+
+      slides.push(
+        <div className='ps-slide-wrap' key={idx} style={slideStyle}>
+          {slideContent}
+        </div>
+      );
 
     }.bind(this));
 
