@@ -141,11 +141,11 @@ module.exports = PictureShow = React.createClass({
   },
 
   next: function (event) {
-    this.goToSlide(this.state.slideIdx < this.props.slides.length - 1 ? this.state.slideIdx + 1 : 0, 'right', event);
+    this.goToSlide(this.state.slideIdx < React.Children.count(this.props.children) - 1 ? this.state.slideIdx + 1 : 0, 'right', event);
   },
 
   previous: function (event) {
-    this.goToSlide(this.state.slideIdx > 0 ? this.state.slideIdx - 1 : this.props.slides.length - 1, 'left', event);
+    this.goToSlide(this.state.slideIdx > 0 ? this.state.slideIdx - 1 : React.Children.count(this.props.children) - 1, 'left', event);
   },
 
   _handleResize: throttle(function () {
@@ -194,7 +194,7 @@ module.exports = PictureShow = React.createClass({
 
   _getLeftDistance: function (startIdx, endIdx) {
     var d = startIdx - endIdx;
-    return d < 0 ? this.props.slides.length + d : d;
+    return d < 0 ? React.Children.count(this.props.children) + d : d;
   },
 
   _getRightDistance: function (startIdx, endIdx) {
@@ -269,7 +269,7 @@ module.exports = PictureShow = React.createClass({
 
     React.Children.forEach(this.props.children, function (slide, idx) {
       
-      var isPending = this._shouldLoad(slide,idx),
+      var isPending = !this._shouldLoad(idx),
         slideContent;
 
       if (this.props.suppressPending && isPending) {
