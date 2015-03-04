@@ -21,7 +21,7 @@ app.use('/favicon.ico', function (req, res, next) {
 });
 
 // app resources
-app.use('/assets', serveStatic(__dirname + '/dist'));
+app.use('/assets', serveStatic(__dirname + '/_temp'));
 
 var App = React.createFactory(require('./components/App/App.jsx'));
 app.use('/', function (req, res, next) {

@@ -15,7 +15,7 @@ function sassToCss() {
       ]
     }))
     .on('error', gutil.log.bind(gutil, 'SASS Error'))
-    .pipe(gulp.dest('./example/dist'))
+    .pipe(gulp.dest('./example/_temp'))
     .pipe(livereload());
 }
 

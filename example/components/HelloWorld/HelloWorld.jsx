@@ -9,9 +9,9 @@ module.exports = HelloWorld = React.createClass({
     return (
       <div className="HelloWorld">
         <PictureShow ratio={[16,9]}>
-          <p>Hello world!</p>
-          <p>Hello world!</p>
-          <p>Hello world!</p>
+          <p>Hello world One {this.props.ratio}</p>
+          <p>Hello world Two</p>
+          <p>Hello world Three</p>
         </PictureShow>
       </div>
     );
