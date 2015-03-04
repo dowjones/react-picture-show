@@ -5,6 +5,7 @@ var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
   Slide = require('./Slide'),
+  noop = function () {},
   PictureShow;
 
 // speed expressed in px/second
@@ -22,11 +23,11 @@ function support3d () {
 function getInternetExplorerVersion(minimum) {
   var rv = -1; // Return value assumes failure.
   if (navigator.appName === 'Microsoft Internet Explorer') {
-      var ua = navigator.userAgent;
-      var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
-      if (re.exec(ua) !== null) {
-        rv = parseFloat(RegExp.$1);
-      }
+    var ua = navigator.userAgent,
+      re = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
+    if (re.exec(ua) !== null) {
+      rv = parseFloat(RegExp.$1);
+    }
   }
   return rv;
 }
@@ -34,28 +35,32 @@ function getInternetExplorerVersion(minimum) {
 module.exports = PictureShow = React.createClass({
 
   propTypes: {
-    slides: React.PropTypes.array.isRequired,
     ratio: React.PropTypes.array,
-    onTransition: React.PropTypes.func,
-    startingSlide: React.PropTypes.number,
     animationSpeed: React.PropTypes.number,
+    startingSlide: React.PropTypes.number,
+    onBeforeTransition: React.PropTypes.func,
+    onAfterTransition: React.PropTypes.func,
     slideBuffer: React.PropTypes.number,
-    clickDivide: React.PropTypes.number
+    clickDivide: React.PropTypes.number,
+    infinite: React.PropTypes.bool,
+    suppressPending: React.PropTypes.bool
   },
 
   getDefaultProps: function (argument) {
     return {
       ratio: null,
-      startingSlide: 0,
       animationSpeed: 1500,
+      startingSlide: 0,
+      onBeforeTransition: noop,
+      onAfterTransition: noop,
       slideBuffer: 1,
       clickDivide: 0.45,
-      onTransition: function () { return; }
+      infinite: true,
+      suppressPending: true
     };
   },
 
   getInitialState: function () {
-
     // store an object on this instance
     this.preloaded = []; 
 
@@ -123,7 +128,7 @@ module.exports = PictureShow = React.createClass({
       trickPanel = null;
     }
 
-    this.props.onTransition(before, slideIdx);
+    this.props.onBeforeTransition(before, slideIdx);
 
     this.setState({
       slideIdx: slideIdx,
@@ -196,12 +201,12 @@ module.exports = PictureShow = React.createClass({
     return this._getLeftDistance(endIdx, startIdx);
   },
 
-  _shouldLoad: function (slide, idx) {
-    if (this.preloaded.indexOf(slide) > -1) {
+  _shouldLoad: function (idx) {
+    if (this.preloaded.indexOf(idx) > -1) {
       return true;
     } else if (this._getLeftDistance(this.state.slideIdx, idx) <= this.props.slideBuffer ||
                this._getRightDistance(this.state.slideIdx, idx) <= this.props.slideBuffer) {
-      this.preloaded.push(slide);
+      this.preloaded.push(idx);
       return true;
     } else {
       return false;
@@ -259,8 +264,13 @@ module.exports = PictureShow = React.createClass({
       width: (100 / this.props.slides.length) + '%'
     };
 
+    // var slides = React.Children.map(this.props.children, function (slide, idx) {
+    //   var pending = this._shouldLoad(slide,idx);
+    // });
+
     var slides = this.props.slides.map(function (slide, idx) {
-      if (this._shouldLoad(slide,idx)) {
+      
+      if (this._shouldLoad(idx)) {
         return (
           <div className='ps-slide-wrap' key={idx} style={slideStyle}>
             <Slide slideRatio={ratio} content={slide}/>
@@ -271,6 +281,7 @@ module.exports = PictureShow = React.createClass({
           <div className='ps-slide-wrap pending-slide' key={idx} style={slideStyle} />
         );
       }
+
     }.bind(this));
 
     return (

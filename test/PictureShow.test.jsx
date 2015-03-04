@@ -350,7 +350,7 @@ describe('PictureShow Events', function () {
     var cb = sinon.spy();
     
     var elm = React.addons.cloneWithProps(slideshowElm, {
-      onTransition: cb
+      onBeforeTransition: cb
     });
 
     var slideshow = TestUtils.renderIntoDocument(elm);
