@@ -34,15 +34,15 @@ The package includes lib/PictureShow.css and src/PictureShow.scss.
 
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
-**ratio** | ```array``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
-**animationSpeed** | ```number``` | 1500 | Roughly how many px/s the slide should move during transitions | yes
-**startingSlide** | ```number``` | 0 | The index of the slide to view first | yes
-**onBeforeTransition** | ```function``` | noop | Called before transition starts | yes
-**onAfterTransition** | ```function``` | noop | Called after transition ends | no
-**slideBuffer** | ```number``` | 1 | The number of slides should be marked as inview to the left and right | yes
-**clickDivide** | ```number``` | 0.45 | Fraction where the line between previous and next should fall when clicking the slideshow | yes 
-**infinite** | bool | true | Slideshow is continuous | no
-**nullPending** | bool | true | Pending slides are not rendered | no
+**ratio** | ```Array``` | Null | Creates a fixed-ratio slideshow / otherwise it stretches to fill its parent, for example `[16,9]` | yes 
+**animationSpeed** | ```Number``` | 1500 | Roughly how many px/s the slide should move during transitions | yes
+**startingSlide** | ```Number``` | 0 | The index of the slide to view first | yes
+**onBeforeTransition** | ```Function``` | noop | Called before transition starts | yes
+**onAfterTransition** | ```Function``` | noop | Called after transition ends | no
+**slideBuffer** | ```Number``` | 1 | The number of slides should be marked as inview to the left and right | yes
+**clickDivide** | ```Number``` | 0.45 | Fraction where the line between previous and next should fall when clicking the slideshow | yes 
+**infinite** | ```boolean``` | true | Slideshow is continuous | no
+**nullPending** | ```boolean``` | true | Pending slides are not rendered | no
 
 ### Public methods on mounted component
 
