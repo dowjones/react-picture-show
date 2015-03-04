@@ -67,7 +67,7 @@ Slides are the direct child components of a ``<PictureShow/>``. They are cloned 
 ```
 By cloning the children with these props, you are free to create 'slide' components that react to them however you want. If the child already has one of these props it will be replaced (even for ```<img/>``` components)
 
-_Note: If ```pendingNull``` property is true on ```<PictureShow/>```, then the slide will not render, so you will not need to handle the ```pending``` prop at the slide level. It is there for edge cases where the user wants to define how 'not loading' works_
+_Note: If ```pendingNull``` property is true on ```<PictureShow/>```, then the slide will not render, so you will not need to handle the ```pending``` prop at the slide level. ```pendingNull``` exists for edge cases where the user wants to define how 'not loading' works_
 
 ## License
 
