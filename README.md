@@ -67,6 +67,12 @@ By cloning the children with these props, you are free to create 'slide' compone
 
 _Note: If ```suppressPending``` property is true on ```<PictureShow/>```, then the slide will not render, so you will not need to handle the ```pending``` prop at the slide level. ```suppressPending``` exists for edge cases where the user wants to define how 'not loading' works_
 
+## Properties in Depth
+
+#### ratio
+
+Defines the shape of the slideshow as a fixed ratio so that it can flex inside its parent container.
+
 ## License
 
 [MIT](/LICENSE)
