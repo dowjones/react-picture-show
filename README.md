@@ -12,8 +12,6 @@ A Bare bones slideshow component that handles transitions between slides and exp
   npm install react-picture-show
 ```
 
-The package includes lib/PictureShow.css and src/PictureShow.scss.
-
 ## Usage
 
 #### Basic
