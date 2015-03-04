@@ -4,7 +4,6 @@
 var throttle = require('lodash/function/throttle'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
-  Slide = require('./Slide'),
   noop = function () {},
   PictureShow;
 
