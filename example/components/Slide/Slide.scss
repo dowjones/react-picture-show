@@ -1,0 +1,40 @@
+// Slide
+
+/*
+ * Centering method from (ghost element)
+ * http://css-tricks.com/centering-in-the-unknown/
+ */
+
+.ps-slide {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.ps-slide:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.ps-slide > img  {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.stretch.ps-img {
+  width: 100%;
+  height: 100%;
+}
+
+.tall.ps-img {
+  height: 100%;
+  width: auto;
+}
+
+.wide.ps-img {
+  width: 100%;
+  height: auto;
+}

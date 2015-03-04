@@ -1,2 +1,15 @@
+
+@import 'reset';
 @import 'PictureShow';
-@import 'HelloWorld/HelloWorld';
+@import 'SimpleSlideshow/SimpleSlideshow';
+@import 'ImageSlideshow/ImageSlideshow';
+@import 'Slide/Slide';
+
+.main-well {
+  width: 600px;
+  margin: 40px auto;
+}
+
+.example {
+  margin-bottom: 30px;
+}
