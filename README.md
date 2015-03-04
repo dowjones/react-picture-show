@@ -53,6 +53,19 @@ goToSlide | Go to a specific slide index | yes
 disable | Deactivate slideshow | no
 enable | Acticate slideshow | no
 
+### How slides work
+
+Slides are the direct child components of a ``<PictureShow/>``. They are cloned with the following additional properties:
+
+```jsx
+  {
+    width: (number), // the width of the mounted slideshow
+    height: (number), // the height of the mounted slideshow
+    pending: (bool) // whether the slide can be lazyloaded
+  }
+```
+By cloning the children with these props, you are free to create 'slide' components that react to them however you want. If the child already has one of these props it will be replaced (even for ```<img/>``` components)
+
 ## License
 
 [MIT](/LICENSE)
