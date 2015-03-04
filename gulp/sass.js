@@ -9,7 +9,10 @@ exports.toCssWatch = sassToCssWatch;
 function sassToCss() {
   return gulp.src('./example/components/App/App.scss')
     .pipe(sass({
-      'includePaths': ['./src/']
+      'includePaths': [
+        './src/',
+        './example/components'
+      ]
     }))
     .on('error', gutil.log.bind(gutil, 'SASS Error'))
     .pipe(gulp.dest('./example/dist'))
