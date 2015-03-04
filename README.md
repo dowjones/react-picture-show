@@ -33,14 +33,14 @@ A Bare bones slideshow component that handles transitions between slides and exp
 Properties | Type | Default | Description | Supported 
 :--------- | :--- | :------ | :---------- | :-------- 
 **[ratio](#ratio)** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
-**animationSpeed** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
-**startingSlide** | ```Number``` | 0 | Initial slide view | yes
-**onBeforeTransition** | ```Function``` | noop | Function called before transition starts | yes
-**onAfterTransition** | ```Function``` | noop | Function called after transition ends | no
-**slideBuffer** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
-**clickDivide** | ```Number``` | 0.45 | The division between previous and next when clicking the slideshow | yes 
-**infinite** | ```Boolean``` | true | Is the Slideshow continuous | no
-**suppressPending** | ```Boolean``` | true | Should slides outside the slideBuffer be suppressed  | no
+**[animationSpeed](#animationSpeed)** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
+**[startingSlide](#startingSlide)** | ```Number``` | 0 | Initial slide view | yes
+**[onBeforeTransition](#onBeforeTransition)** | ```Function``` | noop | Function called before transition starts | yes
+**[onAfterTransition](#onAfterTransition)** | ```Function``` | noop | Function called after transition ends | no
+**[slideBuffer](#slideBuffer)** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
+**[clickDivide](#clickDivide)** | ```Number``` | 0.45 | The division between previous and next when clicking the slideshow | yes 
+**[infinite](#infinite)** | ```Boolean``` | true | Is the Slideshow continuous | no
+**[suppressPending](#suppressPending)** | ```Boolean``` | true | Should slides outside the slideBuffer be suppressed  | no
 
 ### Public methods on mounted component
 
@@ -72,6 +72,38 @@ _Note: If ```suppressPending``` property is true on ```<PictureShow/>```, then t
 #### ratio
 
 Defines the shape of the slideshow as a fixed ratio so that it can flex inside its parent container.
+
+#### animationSpeed
+
+speed...
+
+#### startingSlide
+
+staring slide...
+
+#### onBeforeTransition
+
+function...
+
+#### onAfterTransition 
+
+function...
+
+#### slideBuffer
+
+lazy loading...
+
+#### clickDivide
+
+next and prev...
+
+#### infinite
+
+more stuff...
+
+#### suppressPending
+
+control pending....
 
 ## License
 
