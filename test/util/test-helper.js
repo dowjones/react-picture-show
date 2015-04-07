@@ -6,8 +6,8 @@
 // set this up beforehand it will complain about not being able to do things
 // with the DOM.
 // Perhaps a bug in React?
-var jsdom = require("jsdom");
+var jsdom = require('jsdom');
 
 global.document = jsdom.jsdom('<html><body></body></html>');
-global.window = document.parentWindow;
+global.window = document.defaultView;
 global.navigator = window.navigator;
