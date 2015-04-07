@@ -1,4 +1,4 @@
-# React Picture Show [![Build Status](https://secure.travis-ci.org/skiano/react-picture-show.png)](http://travis-ci.org/skiano/react-picture-show) [![NPM version](https://badge.fury.io/js/react-picture-show.svg)](http://badge.fury.io/js/react-picture-show)
+# React Picture Show [![Build Status](https://secure.travis-ci.org/areusjs/react-picture-show.png)](http://travis-ci.org/areusjs/react-picture-show) [![NPM version](https://badge.fury.io/js/react-picture-show.svg)](http://badge.fury.io/js/react-picture-show)
 
 A Bare bones slideshow component that handles transitions between slides and exposes control so that it is easy to decorate with other controls. Out of the box, it supports **swiping to paginate, clicking left and right, and lasyloading slides**
 
