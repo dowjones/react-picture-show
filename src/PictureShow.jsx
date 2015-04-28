@@ -37,6 +37,7 @@ module.exports = PictureShow = React.createClass({
     ratio: React.PropTypes.array,
     animationSpeed: React.PropTypes.number,
     startingSlide: React.PropTypes.number,
+    onClickSlide: React.PropTypes.func,
     onBeforeTransition: React.PropTypes.func,
     onAfterTransition: React.PropTypes.func,
     slideBuffer: React.PropTypes.number,
@@ -50,6 +51,7 @@ module.exports = PictureShow = React.createClass({
       ratio: null,
       animationSpeed: 1500,
       startingSlide: 0,
+      onClickSlide: null,
       onBeforeTransition: noop,
       onAfterTransition: noop,
       slideBuffer: 1,
@@ -163,9 +165,12 @@ module.exports = PictureShow = React.createClass({
       box = elm.getBoundingClientRect(),
       left = box.left,
       right = left + box.width,
-      divide = left + ((right - left) * this.props.clickDivide);
+      divide = left + ((right - left) * this.props.clickDivide),
+      direction = event.clientX < divide ? 'previous' : 'next';
 
-    if (event.clientX < divide) {
+    if (this.props.onClickSlide) {
+      this.props.onClickSlide(direction, event);
+    } else if (direction === 'previous') {
       this.previous();
     } else {
       this.next();

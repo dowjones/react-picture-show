@@ -8,7 +8,6 @@ var PictureShow = require('../src/PictureShow.jsx'),
 var slideshowElm, PictureShow;
 
 function setUp () {
-
   slideshowElm = (
     <PictureShow startingSlide={0} className='added-class' ratio={[3,2]}>
       <img className='A'/>
@@ -17,7 +16,6 @@ function setUp () {
       <img className='D'/>
     </PictureShow>
   );
-
 }
 
 describe('PictureShow Structure', function () {
@@ -376,6 +374,35 @@ describe('PictureShow Events', function () {
 
     cb.lastCall.args.should.eql([2,1]);
     
+  });
+
+  it('should run `onClickSlide`', function () {
+    var cb = sinon.spy();
+    
+    var elm = React.addons.cloneWithProps(slideshowElm, {
+      onClickSlide: cb
+    });
+
+    var slideshow = TestUtils.renderIntoDocument(elm);
+    var panel = TestUtils.scryRenderedDOMComponentsWithClass(slideshow, 'ps-slides')[1];
+    var node = slideshow.getDOMNode();
+    var originalFn = node.getBoundingClientRect;
+
+    node.getBoundingClientRect = function () {
+      return {
+        left: 100,
+        width: 200
+      };
+    };
+
+    TestUtils.Simulate.mouseDown(panel, {
+      clientX: 210 // next
+    });
+
+    cb.lastCall.args[0].should.equal('next');
+    slideshow.state.slideIdx.should.equal(0); // should not fall through to next
+
+    node.getBoundingClientRect = originalFn; // replace original function
   });
 
 });

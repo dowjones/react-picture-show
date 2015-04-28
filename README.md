@@ -35,6 +35,7 @@ Properties | Type | Default | Description | Supported
 **[ratio](#ratio)** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
 **[animationSpeed](#animationspeed)** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
 **[startingSlide](#startingslide)** | ```Number``` | 0 | Initial slide view | yes
+**[onClickSlide](#onClickSlide)** | ```Function``` | null | override click handler for slide | yes
 **[onBeforeTransition](#onbeforetransition)** | ```Function``` | noop | Function called before transition starts | yes
 **[onAfterTransition](#onaftertransition)** | ```Function``` | noop | Function called after transition ends | no
 **[slideBuffer](#slidebuffer)** | ```Number``` | 1 | The number of slides loaded to the left and right of the slide in view | yes
@@ -79,6 +80,10 @@ speed...
 #### startingSlide
 
 staring slide...
+
+#### onClickSlide
+
+function...
 
 #### onBeforeTransition
 
