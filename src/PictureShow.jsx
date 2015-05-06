@@ -2,11 +2,69 @@
 /* globals window, navigator */
 
 var throttle = require('lodash/function/throttle'),
+  assign = require('lodash/object/assign'),
   React = require('react/addons'),
   Swipeable = require('react-swipeable'),
   noop = function () {},
-  PictureShow;
+  PictureShow,
+  css = {
+    "pictureShow" : {
+      "overflow": "hidden",
+      "WebkitBoxBizing": "border-box",
+         "MozBoxSizing": "border-box",
+            "boxSizing": "border-box"
+    },
+    "pictureShowStretch" : {
+      "position": "relative",
+      "width": "100%",
+      "height": "auto"
+    },    
 
+    "psWrap" : {
+      "position": "relative",
+      "width": "100%",
+      "height": "0"
+    },
+
+    "psWrapStretch": {
+      "background": "none",
+      "overflow": "hidden",
+      "position": "absolute",
+      "top": "0px",
+      "bottom": "0px",
+      "left": "0px",
+      "right": "0px",
+      "height": "auto",
+      "width": "auto"
+    },
+
+    "psSlides" : {
+      "position": "absolute",
+      "display": "block",
+      "height": "100%",
+      "left": "0",
+      "top": "0",
+      "cursor": "pointer",
+      "WebkitTransition": "all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95)",
+         "MozTransition": "all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95)",
+            "transition": "all 400ms cubic-bezier(0.365, 0.45, 0.23, 0.95)",
+      "WebkitTransitionTimingFunction": "cubic-bezier(0.365, 0.45, 0.23, 0.95)",
+         "MozTransitionTimingFunction": "cubic-bezier(0.365, 0.45, 0.23, 0.95)",
+             "transitionTimingFunction": "cubic-bezier(0.365, 0.45, 0.23, 0.95)"
+    },
+
+    "psSlideWrap" : {
+      "overflow": "hidden",
+      "height": "100%",
+      "float": "left",
+     "backgroundColor": "#FAFAFA",
+      "WebkitTouchCallout": "none",
+        "WebkitUserSelect": "none",
+           "MozUserSelect": "none",
+            "msUserSelect": "none",
+                "userSelect": "none"
+    }
+  };
 // speed expressed in px/second
 // returns milliseconds
 function getTransitionTime (distance, speed) {
@@ -261,6 +319,10 @@ module.exports = PictureShow = React.createClass({
       this.props.className
     ].join(' ');
 
+    var pictureShowStretch = !this.props.ratio ? css.pictureShowStretch : {};
+
+    var psWrapStretch = !this.props.ratio ? css.psWrapStretch : {};
+
     var wrapStyle = this.props.ratio ? {
       paddingBottom: (ratio[1] / ratio[0] * 100 ).toFixed(4) + "%"
     } : null;
@@ -286,7 +348,7 @@ module.exports = PictureShow = React.createClass({
       }
 
       slides.push(
-        <div className='ps-slide-wrap' key={idx} style={slideStyle}>
+        <div className='ps-slide-wrap' key={idx} style={assign({}, css.psSlideWrap, slideStyle)}>
           {slideContent}
         </div>
       );
@@ -298,12 +360,13 @@ module.exports = PictureShow = React.createClass({
         className={mainClass}
         onSwiped={this._handleSwipe}
         onSwipeRight={this._handleSwiping}
-        onSwipeLeft={this._handleSwiping}>
-        <div className='ps-wrap' style={wrapStyle} ref='wrap'>
+        onSwipeLeft={this._handleSwiping}
+        style={assign({}, css.pictureShow, pictureShowStretch)}>
+        <div className='ps-wrap' style={assign({}, css.psWrap, psWrapStretch, wrapStyle)} ref='wrap'>
           {['A','B','C'].map(function (key) {
             var panelStyle = this._getPanelStyle(this.state.panels.indexOf(key), key);
             return (
-              <div className='ps-slides' key={key} style={panelStyle} onMouseDown={this._handleSlideClick}>
+              <div className='ps-slides' key={key} style={assign({}, css.psSlides, panelStyle)} onMouseDown={this._handleSlideClick}>
                 {slides}
               </div>
             );
