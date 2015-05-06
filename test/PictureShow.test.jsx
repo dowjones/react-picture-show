@@ -67,8 +67,7 @@ describe('PictureShow Structure', function () {
     );
 
     var slideshow = TestUtils.renderIntoDocument(elm);
-
-    slideshow.refs.wrap.props.should.have.property('style', null);
+    assert.equal(slideshow.refs.wrap.props.style.paddingBottom, undefined);
 
   });
 
