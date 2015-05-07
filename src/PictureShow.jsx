@@ -62,8 +62,9 @@ module.exports = PictureShow = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    if(typeof newProps.activeSlide !== undefined) 
+    if (typeof newProps.activeSlide !== undefined) {
       this.goToSlide(newProps.activeSlide);
+    }
   },
 
   getInitialState: function () {
@@ -71,7 +72,7 @@ module.exports = PictureShow = React.createClass({
     this.preloaded = []; 
 
     return {
-      slideIdx: this.props.activeSlide,
+      slideIdx: this.props.startingSlide || this.props.activeSlide,
       panels: ['A','B','C'],
       ratio: 3/2,
       use3dFallback: false
