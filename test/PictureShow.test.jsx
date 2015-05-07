@@ -218,6 +218,36 @@ describe('PictureShow Navigation', function () {
 
   });
 
+  it('should jump to slides correctly when prop activeSlide updates', function () {
+
+    var slideshow = TestUtils.renderIntoDocument(slideshowElm);
+    var wrap = TestUtils.findRenderedDOMComponentWithClass(slideshow, 'ps-wrap');
+    var panels = TestUtils.scryRenderedDOMComponentsWithClass(wrap, 'ps-slides');
+    var slideCount = React.Children.count(slideshow.props.children);
+
+    function getShift (idx, panelPosition) {
+      panelPosition = (panelPosition - 1) * slideCount;
+      return 'translate3d(' + ((100 / slideCount) * (-idx + panelPosition)) + '%,0,0)';
+    }
+
+    slideshow.setProps({
+      activeSlide: 3
+    });
+
+    panels[0].props.style.transform.should.equal(getShift(3, 0));
+    panels[1].props.style.transform.should.equal(getShift(3, 1));
+    panels[2].props.style.transform.should.equal(getShift(3, 2));
+
+    slideshow.setProps({
+      activeSlide: 0
+    });
+
+    panels[0].props.style.transform.should.equal(getShift(0, 0));
+    panels[1].props.style.transform.should.equal(getShift(0, 1));
+    panels[2].props.style.transform.should.equal(getShift(0, 2));
+
+  });
+
 });
 
 describe('PictureShow Preloading', function () {
