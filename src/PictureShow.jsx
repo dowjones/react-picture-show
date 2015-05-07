@@ -61,6 +61,11 @@ module.exports = PictureShow = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(newProps) {
+    if(typeof newProps.activeSlide !== undefined) 
+      this.goToSlide(newProps.activeSlide);
+  },
+
   getInitialState: function () {
     // store an object on this instance
     this.preloaded = []; 
