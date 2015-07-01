@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* globals window, navigator */
 
 var throttle = require('lodash/function/throttle'),
