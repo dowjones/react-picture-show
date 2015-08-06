@@ -1,9 +1,9 @@
 
 var PictureShow = require('../src/PictureShow.jsx'), 
   sinon = require('sinon'),
-  React = require('react/addons'),
+  React = require('react'),
   assert = require('should'),
-  TestUtils = React.addons.TestUtils;
+  TestUtils = require('react/addons/TestUtils');
 
 var slideshowElm, PictureShow;
 

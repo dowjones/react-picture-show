@@ -1,7 +1,7 @@
 /* globals window, navigator */
 
 var throttle = require('lodash/function/throttle'),
-  React = require('react/addons'),
+  React = require('react'),
   Swipeable = require('react-swipeable'),
   noop = function () {},
   PictureShow;
