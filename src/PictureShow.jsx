@@ -29,8 +29,7 @@ function support3d () {
   return v > -1 ? v > 9 : true;
 }
 
-var PictureShow;
-export default PictureShow = React.createClass({
+const PictureShow = React.createClass({
 
   propTypes: {
     ratio: React.PropTypes.array,
@@ -313,3 +312,5 @@ export default PictureShow = React.createClass({
   }
 
 });
+
+export default PictureShow;
