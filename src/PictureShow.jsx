@@ -1,8 +1,8 @@
 /* globals window, navigator */
 
 import throttle from 'lodash/function/throttle';
-import React from 'react';
-import Swipeable from 'react-swipeable';
+const React = require('react');
+const Swipeable = require('react-swipeable');
 const noop = function () {};
 
 // speed expressed in px/second

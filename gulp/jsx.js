@@ -4,6 +4,7 @@ var gulp = require('gulp'),
   source = require('vinyl-source-stream'),
   watchify = require('watchify'),
   browserify = require('browserify'),
+  babelify = require('babelify'),
   uglify = require('gulp-uglify');
 
 exports.toJs = function () {
@@ -35,7 +36,7 @@ function createBundler(isDebug) {
     cache: {},
     packageCache: {},
     fullPaths: true,
-    transform: ['reactify'],
+    transform: ['babelify'],
     debug: isDebug
   });
 }

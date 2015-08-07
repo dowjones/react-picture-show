@@ -1,4 +1,3 @@
-/** @jsx React.DOM */
 /* global window, document */
 
 var React = require('react'),
