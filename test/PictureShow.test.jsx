@@ -1,11 +1,19 @@
+import {jsdom} from "jsdom";
 
-var PictureShow = require('../src/PictureShow.jsx'), 
-  sinon = require('sinon'),
-  React = require('react'),
-  assert = require('should'),
-  TestUtils = require('react/addons/TestUtils');
+global.document = jsdom("<!doctype html><html><body></body></html>");
+global.window = document.defaultView;
+global.navigator = window.navigator;
 
-var slideshowElm, PictureShow;
+import React from "react/addons";
+let TestUtils = React.addons.TestUtils;
+
+var  sinon = require('sinon'),
+  assert = require('should');
+
+let slideshowElm, PictureShow;
+
+
+  PictureShow = require('../src/PictureShow.jsx');
 
 function setUp () {
   slideshowElm = (

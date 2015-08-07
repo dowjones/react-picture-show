@@ -135,7 +135,7 @@ module.exports = PictureShow = React.createClass({
       direction: direction,
       panels: panels,
       trickPanel: trickPanel,
-      animationTime: animationTime,
+      animationTime: animationTime
     });
 
   },
@@ -271,7 +271,7 @@ module.exports = PictureShow = React.createClass({
     var slides = [];
 
     React.Children.forEach(this.props.children, function (slide, idx) {
-      
+
       var isPending = !this._shouldLoad(idx),
         slideContent;
 
