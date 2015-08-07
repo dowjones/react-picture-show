@@ -1,20 +1,14 @@
 /* globals window, navigator */
 
-var throttle = require('lodash/function/throttle'),
-  React = require('react'),
-  Swipeable = require('react-swipeable'),
-  noop = function () {},
-  PictureShow;
+import throttle from 'lodash/function/throttle';
+import React from 'react';
+import Swipeable from 'react-swipeable';
+const noop = function () {};
 
 // speed expressed in px/second
 // returns milliseconds
 function getTransitionTime (distance, speed) {
   return distance / speed * 1000;
-}
-
-function support3d () {
-  var v = getInternetExplorerVersion();
-  return v > -1 ? v > 9 : true;
 }
 
 // adapted from: http://blogs.msdn.com/b/giorgio/archive/2009/04/14/how-to-detect-ie8-using-javascript-client-side.aspx
@@ -30,7 +24,13 @@ function getInternetExplorerVersion(minimum) {
   return rv;
 }
 
-module.exports = PictureShow = React.createClass({
+function support3d () {
+  var v = getInternetExplorerVersion();
+  return v > -1 ? v > 9 : true;
+}
+
+var PictureShow;
+export default PictureShow = React.createClass({
 
   propTypes: {
     ratio: React.PropTypes.array,
@@ -62,7 +62,7 @@ module.exports = PictureShow = React.createClass({
 
   getInitialState: function () {
     // store an object on this instance
-    this.preloaded = []; 
+    this.preloaded = [];
 
     return {
       slideIdx: this.props.startingSlide,
@@ -299,7 +299,7 @@ module.exports = PictureShow = React.createClass({
         onSwipeRight={this._handleSwiping}
         onSwipeLeft={this._handleSwiping}>
         <div className='ps-wrap' style={wrapStyle} ref='wrap'>
-          {['A','B','C'].map(function (key) {
+          {['A', 'B', 'C'].map(function (key) {
             var panelStyle = this._getPanelStyle(this.state.panels.indexOf(key), key);
             return (
               <div className='ps-slides' key={key} style={panelStyle} onMouseDown={this._handleSlideClick}>
