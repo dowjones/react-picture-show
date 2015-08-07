@@ -5,7 +5,7 @@
   "main": "lib/PictureShow.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register test/PictureShow.test.jsx",
-    "test-watch": "mocha -G -w -R min -r should -r test/util/test-helper.js --compilers jsx:test/util/compiler.js test/*.jsx",
+    "test-watch": "mocha -G -w -R min -r should --compilers js:babel/register test/PictureShow.test.jsx",
     "build:css": "node-sass src/PictureShow.scss lib/PictureShow.css",
     "build:js": "babel ./src --out-dir ./lib",
     "build": "npm run build:js && npm run build:css",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dowjones/react-picture-show.git"
+    "url": "https://github.com/areusjs/react-picture-show.git"
   },
   "keywords": [
     "react-component",
@@ -48,7 +48,6 @@
     "gulp-util": "^3.0.3",
     "is-frontend": "^1.0.0",
     "jsdom": "^3.1.2",
-    "jsx": "^0.9.89",
     "mocha": "^2.2.5",
     "morgan": "^1.5.1",
     "node-jsx": "^0.13.3",
