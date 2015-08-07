@@ -1,23 +1,30 @@
-import {jsdom} from "jsdom";
+// import createComponent from './util/createComponent.jsx';
+import sinon from 'sinon';
+import assert from 'should';
+import jsdom from 'jsdom';
+for (var i in require.cache) delete require.cache[i];
+global.window = {}; global.window.document = {createElement: function(){}};
+  global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+  global.window = document.parentWindow;
+  global.navigator = {
+    userAgent: 'node.js'
+  };
+  const React = require('react/addons');
+  const TestUtils = React.addons.TestUtils;
+  const PictureShow = require( '../src/PictureShow.jsx');
 
-global.document = jsdom("<!doctype html><html><body></body></html>");
-global.window = document.defaultView;
-global.navigator = window.navigator;
 
-import React from "react/addons";
-let TestUtils = React.addons.TestUtils;
+let slideshowElm;
 
-var  sinon = require('sinon'),
-  assert = require('should');
-
-let slideshowElm, PictureShow;
-
-
-  PictureShow = require('../src/PictureShow.jsx');
-
-function setUp () {
+function setUp() {
+  // for (var i in require.cache) delete require.cache[i];
+  // global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+  // global.window = document.parentWindow;
+  // global.navigator = {
+    // userAgent: 'node.js'
+  // };
   slideshowElm = (
-    <PictureShow startingSlide={0} className='added-class' ratio={[3,2]}>
+    <PictureShow startingSlide={0} className='added-class' ratio={[3, 2]}>
       <img className='A'/>
       <img className='B'/>
       <img className='C'/>
