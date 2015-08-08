@@ -23,9 +23,9 @@
   "author": "gregoryskiano@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dowjones/react-picture-show/issues"
+    "url": "https://github.com/areusjs/react-picture-show/issues"
   },
-  "homepage": "https://github.com/dowjones/react-picture-show",
+  "homepage": "https://github.com/areusjs/react-picture-show",
   "devDependencies": {
     "b": "^2.0.1",
     "babel": "^5.8.21",
