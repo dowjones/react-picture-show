@@ -9,7 +9,8 @@
     "build:css": "node-sass src/PictureShow.scss lib/PictureShow.css",
     "build:js": "babel ./src --out-dir ./lib",
     "build": "npm run build:js && npm run build:css",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "babel-node": "babel-node --stage 0 --ignore='foo|bar|baz'"
   },
   "repository": {
     "type": "git",
