@@ -1,15 +1,26 @@
+import sinon from 'sinon';
+import assert from 'should';
+import jsdom from 'jsdom';
 
-var PictureShow = require('../src/PictureShow.jsx'), 
-  sinon = require('sinon'),
-  React = require('react/addons'),
-  assert = require('should'),
-  TestUtils = React.addons.TestUtils;
+for (var i in require.cache) delete require.cache[i];
 
-var slideshowElm, PictureShow;
+global.window = {}; global.window.document = {createElement: function(){}};
+global.document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+global.window = document.parentWindow;
+global.navigator = {
+  userAgent: 'node.js'
+};
 
-function setUp () {
+const React = require('react/addons');
+const TestUtils = React.addons.TestUtils;
+const PictureShow = require( '../src/PictureShow.jsx');
+
+
+let slideshowElm;
+
+function setUp() {
   slideshowElm = (
-    <PictureShow startingSlide={0} className='added-class' ratio={[3,2]}>
+    <PictureShow startingSlide={0} className='added-class' ratio={[3, 2]}>
       <img className='A'/>
       <img className='B'/>
       <img className='C'/>
