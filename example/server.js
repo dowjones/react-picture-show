@@ -1,6 +1,6 @@
 require("babel/register");
 
-var React = require('react'), 
+var React = require('react'),
   express = require('express'),
   compression = require('compression'),
   disableHttpCache = require('connect-cache-control'),
