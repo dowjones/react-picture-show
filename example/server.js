@@ -1,4 +1,4 @@
-require('node-jsx').install({extension: '.jsx'});
+require("babel/register");
 
 var React = require('react'), 
   express = require('express'),
