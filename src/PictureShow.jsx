@@ -277,7 +277,7 @@ const PictureShow = React.createClass({
       if (this.props.suppressPending && isPending) {
         slideContent = null;
       } else {
-        slideContent = React.addons.cloneWithProps(slide, {
+        slideContent = React.cloneElement(slide, {
           slideRatio: ratio,
           slidePending: isPending
         });
