@@ -2,7 +2,7 @@
 
 A Bare bones slideshow component that handles transitions between slides and exposes control so that it is easy to decorate with other controls. Out of the box, it supports **swiping to paginate, clicking left and right, and lasyloading slides**
 
-**[PictureShow Demo](http://areusjs.github.io/react-picture-show/)**
+**[PictureShow Demo](http://dowjones.github.io/react-picture-show/)**
 
 ## installation
 
