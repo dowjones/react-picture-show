@@ -34,7 +34,7 @@ const PictureShow = React.createClass({
   propTypes: {
     ratio: React.PropTypes.array,
     animationSpeed: React.PropTypes.number,
-    startingSlide: React.PropTypes.number,
+    activeSlide: React.PropTypes.number,
     onClickSlide: React.PropTypes.func,
     onBeforeTransition: React.PropTypes.func,
     onAfterTransition: React.PropTypes.func,
@@ -48,7 +48,7 @@ const PictureShow = React.createClass({
     return {
       ratio: null,
       animationSpeed: 1500,
-      startingSlide: 0,
+      activeSlide: 0,
       onClickSlide: null,
       onBeforeTransition: noop,
       onAfterTransition: noop,
@@ -59,12 +59,18 @@ const PictureShow = React.createClass({
     };
   },
 
+  componentWillReceiveProps: function(newProps) {
+    if (typeof newProps.activeSlide !== undefined) {
+      this.goToSlide(newProps.activeSlide);
+    }
+  },
+
   getInitialState: function () {
     // store an object on this instance
     this.preloaded = [];
 
     return {
-      slideIdx: this.props.startingSlide,
+      slideIdx: this.props.startingSlide || this.props.activeSlide,
       panels: ['A','B','C'],
       ratio: 3/2,
       use3dFallback: false

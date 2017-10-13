@@ -36,7 +36,7 @@ Properties | Type | Default | Description | Supported
 :--------- | :--- | :------ | :---------- | :-------- 
 **[ratio](#ratio)** | ```Array``` | Null | Shape of the slideshow, for example: `[16,9]` | yes 
 **[animationSpeed](#animationspeed)** | ```Number``` | 1500 | Speed of slide transitions in px/s | yes
-**[startingSlide](#startingslide)** | ```Number``` | 0 | Initial slide view | yes
+**[activeSlide](#startingslide)** | ```Number``` | 0 | Initial slide view | yes
 **[onClickSlide](#onClickSlide)** | ```Function``` | null | override click handler for slide | yes
 **[onBeforeTransition](#onbeforetransition)** | ```Function``` | noop | Function called before transition starts | yes
 **[onAfterTransition](#onaftertransition)** | ```Function``` | noop | Function called after transition ends | no
@@ -79,7 +79,7 @@ Defines the shape of the slideshow as a fixed ratio so that it can flex inside i
 
 speed...
 
-#### startingSlide
+#### activeSlide
 
 staring slide...
 
